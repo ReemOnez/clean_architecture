@@ -28,23 +28,9 @@ abstract class NetworkDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       T Function(Map<String, dynamic>)? fromJson}) async {
-    try {
-      final response = await _dio.get(endPoint, queryParameters: parameters, onReceiveProgress: onReceive);
-      if (response.statusCode != null) {
-        if (response.statusCode! / 100 == 2) {
-          return SuccessResult(fromJson?.call(jsonDecode(response.data)));
-        } else {
-          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
-        }
-      } else {
-        throw Error();
-      }
-    } on DioError catch (error) {
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
-      rethrow;
-    }
+    return wrapRequestWithTryCatch(() async {
+      return _dio.get(endPoint, queryParameters: parameters, onReceiveProgress: onReceive);
+    }, fromJson);
   }
 
   Future<DataResult<T?>> post<T>(
@@ -54,23 +40,9 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       Map<String, dynamic>? data}) async {
-    try {
-      final response = await _dio.post(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
-      if (response.statusCode != null) {
-        if ((response.statusCode!) / 100 == 2) {
-          return SuccessResult(fromJson?.call(jsonDecode(response.data)));
-        } else {
-          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
-        }
-      } else {
-        throw Error();
-      }
-    } on DioError catch (error) {
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
-      rethrow;
-    }
+    return wrapRequestWithTryCatch(() async {
+      return _dio.post(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
+    }, fromJson);
   }
 
   Future<DataResult<T?>> delete<T>(
@@ -80,23 +52,9 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    try {
-      final response = await _dio.delete(endPoint, queryParameters: parameters, data: data);
-      if (response.statusCode != null) {
-        if ((response.statusCode!) / 100 == 2) {
-          return SuccessResult(fromJson?.call(jsonDecode(response.data)));
-        } else {
-          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
-        }
-      } else {
-        throw Error();
-      }
-    } on DioError catch (error) {
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
-      rethrow;
-    }
+    return wrapRequestWithTryCatch(() async {
+      return _dio.delete(endPoint, queryParameters: parameters, data: data);
+    }, fromJson);
   }
 
   Future<DataResult<T?>> put<T>(
@@ -106,23 +64,9 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    try {
-      final response = await _dio.put(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
-      if (response.statusCode != null) {
-        if ((response.statusCode!) / 100 == 2) {
-          return SuccessResult(fromJson?.call(jsonDecode(response.data)));
-        } else {
-          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
-        }
-      } else {
-        throw Error();
-      }
-    } on DioError catch (error) {
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
-      rethrow;
-    }
+    return wrapRequestWithTryCatch(() async {
+      return _dio.put(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
+    }, fromJson);
   }
 
   Future<DataResult<T?>> patch<T>(
@@ -132,23 +76,9 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    try {
-      final response = await _dio.patch(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
-      if (response.statusCode != null) {
-        if ((response.statusCode!) / 100 == 2) {
-          return SuccessResult(fromJson?.call(jsonDecode(response.data)));
-        } else {
-          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
-        }
-      } else {
-        throw Error();
-      }
-    } on DioError catch (error) {
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
-      rethrow;
-    }
+    return wrapRequestWithTryCatch(() async {
+      return _dio.patch(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
+    }, fromJson);
   }
 
   String getErrorMessage(Response response) {
@@ -172,6 +102,29 @@ abstract class NetworkDataSource {
         return result ?? serviceUnAvailable;
       default:
         return result ?? 'Received invalid status code: ${object.statusCode}';
+    }
+  }
+
+  Future<DataResult<T?>> wrapRequestWithTryCatch<T>(
+    Future<Response<dynamic>> Function() callBackFunction,
+    T Function(Map<String, dynamic>)? fromJson,
+  ) async {
+    try {
+      final response = await callBackFunction();
+      if (response.statusCode != null) {
+        if ((response.statusCode!) / 100 == 2) {
+          return SuccessResult(response.data != null ? fromJson?.call(jsonDecode(response.data)) : response.data);
+        } else {
+          return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
+        }
+      } else {
+        throw Error();
+      }
+    } on DioError catch (error) {
+      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
+    } catch (error) {
+      debugPrint('Null status code $error');
+      rethrow;
     }
   }
 }
