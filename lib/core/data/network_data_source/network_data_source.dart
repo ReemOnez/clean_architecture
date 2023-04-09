@@ -4,8 +4,22 @@ import 'package:clean_project/core/data/models/failure_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
-class NetworkDataSource {
+abstract class NetworkDataSource {
   final Dio _dio;
+
+  String? getFailureErrorMessage(Response response);
+
+  String get unAuthorized => 'unAuthorized';
+
+  String get notFound => 'Not found';
+
+  String get requestTimeOut => 'Request timeout';
+
+  String get conflict => 'Conflict';
+
+  String get serviceUnAvailable => 'Service unavailable';
+
+  String get internalServerError => 'Internal server error';
 
   NetworkDataSource(this._dio);
 
@@ -16,7 +30,6 @@ class NetworkDataSource {
       T Function(Map<String, dynamic>)? fromJson}) async {
     try {
       final response = await _dio.get(endPoint, queryParameters: parameters, onReceiveProgress: onReceive);
-      //todo (Queen) handle the case when statusCode is null
       if (response.statusCode != null) {
         if (response.statusCode! / 100 == 2) {
           return SuccessResult(fromJson?.call(jsonDecode(response.data)));
@@ -139,29 +152,26 @@ class NetworkDataSource {
   }
 
   String getErrorMessage(Response response) {
-    /// todo: object['error'] is according to the backEnd
     final object = jsonDecode(response.data);
     String? result;
-    result = object['error'];
+    result = getFailureErrorMessage(response);
     switch (response.statusCode) {
       case 400:
-        return result ?? 'unAuthorized';
       case 401:
-        return result ?? 'unAuthorized';
       case 403:
-        return result ?? 'unAuthorized';
+        return result ?? unAuthorized;
       case 404:
-        return result ?? 'Not found';
+        return result ?? notFound;
       case 408:
-        return result ?? 'Request timeout';
+        return result ?? requestTimeOut;
       case 409:
-        return result ?? 'Conflict';
+        return result ?? conflict;
       case 500:
-        return result ?? 'Internal server error';
+        return result ?? internalServerError;
       case 503:
-        return result ?? 'Service unavailable';
+        return result ?? serviceUnAvailable;
       default:
-        return result ?? 'Received invalid status code: ${object['statusCode']}';
+        return result ?? 'Received invalid status code: ${object.statusCode}';
     }
   }
 }

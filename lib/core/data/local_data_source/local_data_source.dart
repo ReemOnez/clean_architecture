@@ -34,7 +34,7 @@ class LocalDataSource {
       final insertedRows = await database.insert(tableName, data, conflictAlgorithm: ConflictAlgorithm.replace);
       return SuccessResult(insertedRows);
     } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'failed to insert data in table: $tableName'));
+      return FailureResult(FailureModel(errorMessage: 'ailed to insert data in table: $tableName'));
     }
   }
 
@@ -49,9 +49,10 @@ class LocalDataSource {
       }
       return SuccessResult(insertedRows);
     } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'failed to insert data in table: $tableName'));
+      return FailureResult(FailureModel(errorMessage: 'Failed to insert data in table: $tableName'));
     }
   }
+
   Future<DataResult<int>> delete({
     required String tableName,
     required String whereCondition,
@@ -61,7 +62,7 @@ class LocalDataSource {
       final deletedRows = await database.delete(tableName, where: whereCondition, whereArgs: values);
       return SuccessResult(deletedRows);
     } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'failed to delete data in table: $tableName'));
+      return FailureResult(FailureModel(errorMessage: 'Failed to delete data in table: $tableName'));
     }
   }
 
@@ -78,6 +79,7 @@ class LocalDataSource {
       return FailureResult(FailureModel(errorMessage: 'failed to get data in table: $tableName'));
     }
   }
+
   Future<DataResult<List<T>>> getObjects<T>({
     required String tableName,
     required String whereCondition,

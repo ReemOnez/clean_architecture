@@ -7,7 +7,7 @@ void init() {
   getIt.registerLazySingleton(
     () => Dio(
       BaseOptions(
-        baseUrl: '', // baseUrl according to FlavorConfig,
+        baseUrl: '', /// baseUrl according to FlavorConfig,
         contentType: 'application/json',
         followRedirects: false,
         validateStatus: (status) {
@@ -15,8 +15,8 @@ void init() {
         },
         headers: {
           Headers.acceptHeader: "application/json",
-          'Accept-Language': '', // read from sharedPreference
-          'Authorization': '', // read from sharedPreference
+          'Accept-Language': '', /// read from sharedPreference
+          'Authorization': '', /// read from sharedPreference
         },
       ),
     ),
