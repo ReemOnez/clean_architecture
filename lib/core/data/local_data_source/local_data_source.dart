@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-class LocalDataSource {
+abstract class LocalDataSource {
   late final Database database;
 
   LocalDataSource({required String dataBaseName, required int version, required List<String> schema}) {
@@ -34,7 +34,7 @@ class LocalDataSource {
       final insertedRows = await database.insert(tableName, data, conflictAlgorithm: ConflictAlgorithm.replace);
       return SuccessResult(insertedRows);
     } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'ailed to insert data in table: $tableName'));
+      return FailureResult(FailureModel(errorMessage: 'Failed to insert data in table: $tableName'));
     }
   }
 
@@ -42,15 +42,13 @@ class LocalDataSource {
     required String tableName,
     required List<Map<String, dynamic>> data,
   }) async {
-    try {
+    return wrapLocalRequestWithTryCatch(() async {
       int insertedRows = 0;
-      for(final object in data) {
+      for (final object in data) {
         insertedRows += await database.insert(tableName, object, conflictAlgorithm: ConflictAlgorithm.replace);
       }
-      return SuccessResult(insertedRows);
-    } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'Failed to insert data in table: $tableName'));
-    }
+      return insertedRows;
+    }, 'Failed to insert data in table: $tableName');
   }
 
   Future<DataResult<int>> delete({
@@ -58,12 +56,9 @@ class LocalDataSource {
     required String whereCondition,
     required List<dynamic> values,
   }) async {
-    try {
-      final deletedRows = await database.delete(tableName, where: whereCondition, whereArgs: values);
-      return SuccessResult(deletedRows);
-    } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'Failed to delete data in table: $tableName'));
-    }
+    return wrapLocalRequestWithTryCatch(() async {
+      return await database.delete(tableName, where: whereCondition, whereArgs: values);
+    }, 'Failed to delete data from table: $tableName');
   }
 
   Future<DataResult<T>> getObject<T>({
@@ -72,12 +67,10 @@ class LocalDataSource {
     required List<dynamic> values,
     required T Function(Map<String, dynamic>) fromJson,
   }) async {
-    try {
+    return wrapLocalRequestWithTryCatch(() async {
       final data = await database.query(tableName, where: whereCondition, whereArgs: values);
-      return SuccessResult(fromJson.call(data.first));
-    } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'failed to get data in table: $tableName'));
-    }
+      return fromJson.call(data.first);
+    }, 'Failed to get data from table: $tableName');
   }
 
   Future<DataResult<List<T>>> getObjects<T>({
@@ -86,15 +79,22 @@ class LocalDataSource {
     required List<dynamic> values,
     required T Function(Map<String, dynamic>) fromJson,
   }) async {
-    try {
+    return wrapLocalRequestWithTryCatch(() async {
       final data = await database.query(tableName, where: whereCondition, whereArgs: values);
       List<T> ret = [];
-      for(final row in data) {
+      for (final row in data) {
         ret.add(fromJson.call(row));
       }
-      return SuccessResult(ret);
+      return ret;
+    }, 'Failed to get data from table: $tableName');
+  }
+
+  Future<DataResult<T>> wrapLocalRequestWithTryCatch<T>(Future<T> Function() dataBaseCallBack, String failedMessage) async {
+    try {
+      final data = await dataBaseCallBack();
+      return SuccessResult(data);
     } catch (e) {
-      return FailureResult(FailureModel(errorMessage: 'failed to get data in table: $tableName'));
+      return FailureResult(FailureModel(errorMessage: failedMessage));
     }
   }
 }

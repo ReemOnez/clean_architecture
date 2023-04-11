@@ -28,7 +28,7 @@ abstract class NetworkDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       T Function(Map<String, dynamic>)? fromJson}) async {
-    return wrapRequestWithTryCatch(() async {
+    return wrapNetworkRequestWithTryCatch(() async {
       return _dio.get(endPoint, queryParameters: parameters, onReceiveProgress: onReceive);
     }, fromJson);
   }
@@ -40,7 +40,7 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       Map<String, dynamic>? data}) async {
-    return wrapRequestWithTryCatch(() async {
+    return wrapNetworkRequestWithTryCatch(() async {
       return _dio.post(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
     }, fromJson);
   }
@@ -52,7 +52,7 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapRequestWithTryCatch(() async {
+    return wrapNetworkRequestWithTryCatch(() async {
       return _dio.delete(endPoint, queryParameters: parameters, data: data);
     }, fromJson);
   }
@@ -64,7 +64,7 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapRequestWithTryCatch(() async {
+    return wrapNetworkRequestWithTryCatch(() async {
       return _dio.put(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
     }, fromJson);
   }
@@ -76,7 +76,7 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapRequestWithTryCatch(() async {
+    return wrapNetworkRequestWithTryCatch(() async {
       return _dio.patch(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
     }, fromJson);
   }
@@ -105,7 +105,7 @@ abstract class NetworkDataSource {
     }
   }
 
-  Future<DataResult<T?>> wrapRequestWithTryCatch<T>(
+  Future<DataResult<T?>> wrapNetworkRequestWithTryCatch<T>(
     Future<Response<dynamic>> Function() callBackFunction,
     T Function(Map<String, dynamic>)? fromJson,
   ) async {
