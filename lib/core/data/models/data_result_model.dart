@@ -7,7 +7,7 @@ abstract class DataResult<T> {
 
   FailureResult get failureResult => this as FailureResult;
 
-  SuccessResult get successResult => this as SuccessResult;
+  SuccessResult<T> get successResult => this as SuccessResult<T>;
 
   FailureModel get failure => (this as FailureResult).failureModel;
 
