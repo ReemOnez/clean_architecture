@@ -13,7 +13,7 @@ void init() async{
   getIt.registerLazySingleton(
     () => Dio(
       BaseOptions(
-        baseUrl: '', /// baseUrl according to FlavorConfig,
+        baseUrl: '', /// baseUrl according to flavor configuration,
         contentType: 'application/json',
         followRedirects: false,
         validateStatus: (status) {

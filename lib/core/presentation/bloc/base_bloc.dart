@@ -7,8 +7,13 @@ class BaseBloc<E, S> extends Bloc<E, S> {
 
   BaseBloc(super.initialState);
 
-  futureWrapper<T>(Future<DataResult<T?>> Function() futureCallBack, bool useBaseLoader, void Function(SuccessResult<T?>) onSuccessCallBack,
-      void Function(FailureResult) onErrorCallBack, void Function(bool) onLoadingChange) async {
+  futureWrapper<T>(Future<DataResult<T?>> Function() futureCallBack,
+      {required bool useBaseLoader,
+      required void Function(SuccessResult<T?>) onSuccessCallBack,
+      required void Function(FailureResult) onErrorCallBack,
+      required void Function(bool) onLoadingChange,
+      required void Function() onUnKnownError,
+      }) async {
     if (useBaseLoader) {
       helperBloc.add(const HelperBlocEvent.loadingChanged(true));
     } else {
@@ -26,4 +31,8 @@ class BaseBloc<E, S> extends Bloc<E, S> {
       onErrorCallBack(data.failureResult);
     }
   }
+}
+
+void defaultErrorHandler(String errorMessage){
+  /// here we show a snackBar with error essage
 }
