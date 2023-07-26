@@ -1,6 +1,6 @@
 import 'package:clean_project/core/data/models/data_result_model.dart';
 import 'package:clean_project/core/data/models/failure_model.dart';
-import 'package:clean_project/core/services/connectivity_service.dart';
+import 'package:clean_project/core/services/connectivity_service/connectivity_service.dart';
 import 'package:clean_project/core/services/connectivity_service_interface.dart';
 
 abstract class BaseRepository {

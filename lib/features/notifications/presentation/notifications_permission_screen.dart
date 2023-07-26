@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationsPermissionScreen extends StatefulWidget {
   const NotificationsPermissionScreen({Key? key}) : super(key: key);
@@ -16,22 +17,34 @@ class _NotificationsPermissionScreenState extends State<NotificationsPermissionS
         centerTitle: true,
         title: const Text('Notification Permission'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Please allow us to send you notifications with the latest updates!'),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(onPressed: () async {}, child: const Text('Allow')),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(onPressed: () async {}, child: const Text('Cancel')),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text('Please allow us to send you notifications with the latest updates!'),
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(onPressed: () async {
+            final permissionDeniedBefore = ref.watch(sharedPreferencesProvider).isPermissionDenied;
+            if (!permissionDeniedBefore) {
+              await ref.watch(notificationPermissionProvider.notifier).requestNotificationPermission().then((permission) {
+                if (permission == PermissionStatus.granted) {
+                  ref.read(mixPanelProvider).trackMixpanelEvent(MixpanelEventsTypes.signUpScreen);
+                  Navigator.of(context).pushReplacementNamed(PhoneNumberScreen.routeName);
+                } else {
+                  ref.watch(sharedPreferencesProvider).savePermissionDeniedBefore(true);
+                }
+              });
+            } else {
+              openAppSettings();
+            }
+          }, child: const Text('Allow')),
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(onPressed: () async {}, child: const Text('Cancel')),
+        ],
       ),
     ));
   }

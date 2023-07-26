@@ -1,4 +1,4 @@
-import 'package:clean_project/core/services/connectivity_service_interface.dart';
+import 'package:clean_project/core/services/connectivity_service/connectivity_service_interface.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
