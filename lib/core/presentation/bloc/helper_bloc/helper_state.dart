@@ -4,13 +4,15 @@ part of 'helper_bloc.dart';
 class HelperBlocState with _$HelperBlocState {
   const factory HelperBlocState({
     required bool isLoading,
-  //  required ContextCallback contextCallback,
-    FailureResult ? failure,
+    //  required ContextCallback contextCallback,
+    FailureResult? failure,
+    void Function(BuildContext)? contextCallback,
     // Object? unknownError,
   }) = _HelperBlocState;
 
-  factory HelperBlocState.initial() => HelperBlocState(
-    isLoading: false,
-   // contextCallback: (_) {},
-  );
+  factory HelperBlocState.initial() => const HelperBlocState(
+        isLoading: false,
+        contextCallback: null,
+        // contextCallback: (_) {},
+      );
 }

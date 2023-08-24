@@ -6,13 +6,14 @@ class HelperBlocEvent with _$HelperBlocEvent {
 
   const factory HelperBlocEvent.failureCleared() = FailureCleared;
 
-  const factory HelperBlocEvent.failureHappened(FailureResult failure) =
-  FailureHappened;
+  const factory HelperBlocEvent.failureHappened(FailureResult failure) = FailureHappened;
 
-  // const factory HelperBlocEvent.unknownErrorHappened(Object unknownError) =
-  // UnknownErrorHappened;
-  //
-  // const factory HelperBlocEvent.contextCallbackTriggered(
-  //     ContextCallback contextCallback,
-  //     ) = ContextCallbackTriggered;
+  const factory HelperBlocEvent.contextCallbackTriggered(void Function(BuildContext) callback) = ContextCallbackTriggered;
+
+// const factory HelperBlocEvent.unknownErrorHappened(Object unknownError) =
+// UnknownErrorHappened;
+//
+// const factory HelperBlocEvent.contextCallbackTriggered(
+//     ContextCallback contextCallback,
+//     ) = ContextCallbackTriggered;
 }

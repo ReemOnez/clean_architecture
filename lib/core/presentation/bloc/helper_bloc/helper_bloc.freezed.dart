@@ -19,6 +19,8 @@ mixin _$HelperBlocState {
   bool get isLoading =>
       throw _privateConstructorUsedError; //  required ContextCallback contextCallback,
   FailureResult<dynamic>? get failure => throw _privateConstructorUsedError;
+  void Function(BuildContext)? get contextCallback =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HelperBlocStateCopyWith<HelperBlocState> get copyWith =>
@@ -31,7 +33,10 @@ abstract class $HelperBlocStateCopyWith<$Res> {
           HelperBlocState value, $Res Function(HelperBlocState) then) =
       _$HelperBlocStateCopyWithImpl<$Res, HelperBlocState>;
   @useResult
-  $Res call({bool isLoading, FailureResult<dynamic>? failure});
+  $Res call(
+      {bool isLoading,
+      FailureResult<dynamic>? failure,
+      void Function(BuildContext)? contextCallback});
 }
 
 /// @nodoc
@@ -49,6 +54,7 @@ class _$HelperBlocStateCopyWithImpl<$Res, $Val extends HelperBlocState>
   $Res call({
     Object? isLoading = null,
     Object? failure = freezed,
+    Object? contextCallback = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -59,6 +65,10 @@ class _$HelperBlocStateCopyWithImpl<$Res, $Val extends HelperBlocState>
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
               as FailureResult<dynamic>?,
+      contextCallback: freezed == contextCallback
+          ? _value.contextCallback
+          : contextCallback // ignore: cast_nullable_to_non_nullable
+              as void Function(BuildContext)?,
     ) as $Val);
   }
 }
@@ -71,7 +81,10 @@ abstract class _$$_HelperBlocStateCopyWith<$Res>
       __$$_HelperBlocStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, FailureResult<dynamic>? failure});
+  $Res call(
+      {bool isLoading,
+      FailureResult<dynamic>? failure,
+      void Function(BuildContext)? contextCallback});
 }
 
 /// @nodoc
@@ -87,6 +100,7 @@ class __$$_HelperBlocStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? failure = freezed,
+    Object? contextCallback = freezed,
   }) {
     return _then(_$_HelperBlocState(
       isLoading: null == isLoading
@@ -97,6 +111,10 @@ class __$$_HelperBlocStateCopyWithImpl<$Res>
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
               as FailureResult<dynamic>?,
+      contextCallback: freezed == contextCallback
+          ? _value.contextCallback
+          : contextCallback // ignore: cast_nullable_to_non_nullable
+              as void Function(BuildContext)?,
     ));
   }
 }
@@ -104,17 +122,20 @@ class __$$_HelperBlocStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_HelperBlocState implements _HelperBlocState {
-  const _$_HelperBlocState({required this.isLoading, this.failure});
+  const _$_HelperBlocState(
+      {required this.isLoading, this.failure, this.contextCallback});
 
   @override
   final bool isLoading;
 //  required ContextCallback contextCallback,
   @override
   final FailureResult<dynamic>? failure;
+  @override
+  final void Function(BuildContext)? contextCallback;
 
   @override
   String toString() {
-    return 'HelperBlocState(isLoading: $isLoading, failure: $failure)';
+    return 'HelperBlocState(isLoading: $isLoading, failure: $failure, contextCallback: $contextCallback)';
   }
 
   @override
@@ -124,11 +145,14 @@ class _$_HelperBlocState implements _HelperBlocState {
             other is _$_HelperBlocState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.failure, failure) || other.failure == failure));
+            (identical(other.failure, failure) || other.failure == failure) &&
+            (identical(other.contextCallback, contextCallback) ||
+                other.contextCallback == contextCallback));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, failure);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, failure, contextCallback);
 
   @JsonKey(ignore: true)
   @override
@@ -140,12 +164,15 @@ class _$_HelperBlocState implements _HelperBlocState {
 abstract class _HelperBlocState implements HelperBlocState {
   const factory _HelperBlocState(
       {required final bool isLoading,
-      final FailureResult<dynamic>? failure}) = _$_HelperBlocState;
+      final FailureResult<dynamic>? failure,
+      final void Function(BuildContext)? contextCallback}) = _$_HelperBlocState;
 
   @override
   bool get isLoading;
   @override //  required ContextCallback contextCallback,
   FailureResult<dynamic>? get failure;
+  @override
+  void Function(BuildContext)? get contextCallback;
   @override
   @JsonKey(ignore: true)
   _$$_HelperBlocStateCopyWith<_$_HelperBlocState> get copyWith =>
@@ -159,6 +186,8 @@ mixin _$HelperBlocEvent {
     required TResult Function(bool isLoading) loadingChanged,
     required TResult Function() failureCleared,
     required TResult Function(FailureResult<dynamic> failure) failureHappened,
+    required TResult Function(void Function(BuildContext) callback)
+        contextCallbackTriggered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -166,6 +195,8 @@ mixin _$HelperBlocEvent {
     TResult? Function(bool isLoading)? loadingChanged,
     TResult? Function()? failureCleared,
     TResult? Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult? Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -173,6 +204,8 @@ mixin _$HelperBlocEvent {
     TResult Function(bool isLoading)? loadingChanged,
     TResult Function()? failureCleared,
     TResult Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -181,6 +214,8 @@ mixin _$HelperBlocEvent {
     required TResult Function(LoadingChanged value) loadingChanged,
     required TResult Function(FailureCleared value) failureCleared,
     required TResult Function(FailureHappened value) failureHappened,
+    required TResult Function(ContextCallbackTriggered value)
+        contextCallbackTriggered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -188,6 +223,7 @@ mixin _$HelperBlocEvent {
     TResult? Function(LoadingChanged value)? loadingChanged,
     TResult? Function(FailureCleared value)? failureCleared,
     TResult? Function(FailureHappened value)? failureHappened,
+    TResult? Function(ContextCallbackTriggered value)? contextCallbackTriggered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -195,6 +231,7 @@ mixin _$HelperBlocEvent {
     TResult Function(LoadingChanged value)? loadingChanged,
     TResult Function(FailureCleared value)? failureCleared,
     TResult Function(FailureHappened value)? failureHappened,
+    TResult Function(ContextCallbackTriggered value)? contextCallbackTriggered,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -286,6 +323,8 @@ class _$LoadingChanged implements LoadingChanged {
     required TResult Function(bool isLoading) loadingChanged,
     required TResult Function() failureCleared,
     required TResult Function(FailureResult<dynamic> failure) failureHappened,
+    required TResult Function(void Function(BuildContext) callback)
+        contextCallbackTriggered,
   }) {
     return loadingChanged(isLoading);
   }
@@ -296,6 +335,8 @@ class _$LoadingChanged implements LoadingChanged {
     TResult? Function(bool isLoading)? loadingChanged,
     TResult? Function()? failureCleared,
     TResult? Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult? Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
   }) {
     return loadingChanged?.call(isLoading);
   }
@@ -306,6 +347,8 @@ class _$LoadingChanged implements LoadingChanged {
     TResult Function(bool isLoading)? loadingChanged,
     TResult Function()? failureCleared,
     TResult Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (loadingChanged != null) {
@@ -320,6 +363,8 @@ class _$LoadingChanged implements LoadingChanged {
     required TResult Function(LoadingChanged value) loadingChanged,
     required TResult Function(FailureCleared value) failureCleared,
     required TResult Function(FailureHappened value) failureHappened,
+    required TResult Function(ContextCallbackTriggered value)
+        contextCallbackTriggered,
   }) {
     return loadingChanged(this);
   }
@@ -330,6 +375,7 @@ class _$LoadingChanged implements LoadingChanged {
     TResult? Function(LoadingChanged value)? loadingChanged,
     TResult? Function(FailureCleared value)? failureCleared,
     TResult? Function(FailureHappened value)? failureHappened,
+    TResult? Function(ContextCallbackTriggered value)? contextCallbackTriggered,
   }) {
     return loadingChanged?.call(this);
   }
@@ -340,6 +386,7 @@ class _$LoadingChanged implements LoadingChanged {
     TResult Function(LoadingChanged value)? loadingChanged,
     TResult Function(FailureCleared value)? failureCleared,
     TResult Function(FailureHappened value)? failureHappened,
+    TResult Function(ContextCallbackTriggered value)? contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (loadingChanged != null) {
@@ -399,6 +446,8 @@ class _$FailureCleared implements FailureCleared {
     required TResult Function(bool isLoading) loadingChanged,
     required TResult Function() failureCleared,
     required TResult Function(FailureResult<dynamic> failure) failureHappened,
+    required TResult Function(void Function(BuildContext) callback)
+        contextCallbackTriggered,
   }) {
     return failureCleared();
   }
@@ -409,6 +458,8 @@ class _$FailureCleared implements FailureCleared {
     TResult? Function(bool isLoading)? loadingChanged,
     TResult? Function()? failureCleared,
     TResult? Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult? Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
   }) {
     return failureCleared?.call();
   }
@@ -419,6 +470,8 @@ class _$FailureCleared implements FailureCleared {
     TResult Function(bool isLoading)? loadingChanged,
     TResult Function()? failureCleared,
     TResult Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (failureCleared != null) {
@@ -433,6 +486,8 @@ class _$FailureCleared implements FailureCleared {
     required TResult Function(LoadingChanged value) loadingChanged,
     required TResult Function(FailureCleared value) failureCleared,
     required TResult Function(FailureHappened value) failureHappened,
+    required TResult Function(ContextCallbackTriggered value)
+        contextCallbackTriggered,
   }) {
     return failureCleared(this);
   }
@@ -443,6 +498,7 @@ class _$FailureCleared implements FailureCleared {
     TResult? Function(LoadingChanged value)? loadingChanged,
     TResult? Function(FailureCleared value)? failureCleared,
     TResult? Function(FailureHappened value)? failureHappened,
+    TResult? Function(ContextCallbackTriggered value)? contextCallbackTriggered,
   }) {
     return failureCleared?.call(this);
   }
@@ -453,6 +509,7 @@ class _$FailureCleared implements FailureCleared {
     TResult Function(LoadingChanged value)? loadingChanged,
     TResult Function(FailureCleared value)? failureCleared,
     TResult Function(FailureHappened value)? failureHappened,
+    TResult Function(ContextCallbackTriggered value)? contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (failureCleared != null) {
@@ -533,6 +590,8 @@ class _$FailureHappened implements FailureHappened {
     required TResult Function(bool isLoading) loadingChanged,
     required TResult Function() failureCleared,
     required TResult Function(FailureResult<dynamic> failure) failureHappened,
+    required TResult Function(void Function(BuildContext) callback)
+        contextCallbackTriggered,
   }) {
     return failureHappened(failure);
   }
@@ -543,6 +602,8 @@ class _$FailureHappened implements FailureHappened {
     TResult? Function(bool isLoading)? loadingChanged,
     TResult? Function()? failureCleared,
     TResult? Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult? Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
   }) {
     return failureHappened?.call(failure);
   }
@@ -553,6 +614,8 @@ class _$FailureHappened implements FailureHappened {
     TResult Function(bool isLoading)? loadingChanged,
     TResult Function()? failureCleared,
     TResult Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (failureHappened != null) {
@@ -567,6 +630,8 @@ class _$FailureHappened implements FailureHappened {
     required TResult Function(LoadingChanged value) loadingChanged,
     required TResult Function(FailureCleared value) failureCleared,
     required TResult Function(FailureHappened value) failureHappened,
+    required TResult Function(ContextCallbackTriggered value)
+        contextCallbackTriggered,
   }) {
     return failureHappened(this);
   }
@@ -577,6 +642,7 @@ class _$FailureHappened implements FailureHappened {
     TResult? Function(LoadingChanged value)? loadingChanged,
     TResult? Function(FailureCleared value)? failureCleared,
     TResult? Function(FailureHappened value)? failureHappened,
+    TResult? Function(ContextCallbackTriggered value)? contextCallbackTriggered,
   }) {
     return failureHappened?.call(this);
   }
@@ -587,6 +653,7 @@ class _$FailureHappened implements FailureHappened {
     TResult Function(LoadingChanged value)? loadingChanged,
     TResult Function(FailureCleared value)? failureCleared,
     TResult Function(FailureHappened value)? failureHappened,
+    TResult Function(ContextCallbackTriggered value)? contextCallbackTriggered,
     required TResult orElse(),
   }) {
     if (failureHappened != null) {
@@ -604,4 +671,157 @@ abstract class FailureHappened implements HelperBlocEvent {
   @JsonKey(ignore: true)
   _$$FailureHappenedCopyWith<_$FailureHappened> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ContextCallbackTriggeredCopyWith<$Res> {
+  factory _$$ContextCallbackTriggeredCopyWith(_$ContextCallbackTriggered value,
+          $Res Function(_$ContextCallbackTriggered) then) =
+      __$$ContextCallbackTriggeredCopyWithImpl<$Res>;
+  @useResult
+  $Res call({void Function(BuildContext) callback});
+}
+
+/// @nodoc
+class __$$ContextCallbackTriggeredCopyWithImpl<$Res>
+    extends _$HelperBlocEventCopyWithImpl<$Res, _$ContextCallbackTriggered>
+    implements _$$ContextCallbackTriggeredCopyWith<$Res> {
+  __$$ContextCallbackTriggeredCopyWithImpl(_$ContextCallbackTriggered _value,
+      $Res Function(_$ContextCallbackTriggered) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? callback = null,
+  }) {
+    return _then(_$ContextCallbackTriggered(
+      null == callback
+          ? _value.callback
+          : callback // ignore: cast_nullable_to_non_nullable
+              as void Function(BuildContext),
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ContextCallbackTriggered implements ContextCallbackTriggered {
+  const _$ContextCallbackTriggered(this.callback);
+
+  @override
+  final void Function(BuildContext) callback;
+
+  @override
+  String toString() {
+    return 'HelperBlocEvent.contextCallbackTriggered(callback: $callback)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ContextCallbackTriggered &&
+            (identical(other.callback, callback) ||
+                other.callback == callback));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, callback);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ContextCallbackTriggeredCopyWith<_$ContextCallbackTriggered>
+      get copyWith =>
+          __$$ContextCallbackTriggeredCopyWithImpl<_$ContextCallbackTriggered>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(bool isLoading) loadingChanged,
+    required TResult Function() failureCleared,
+    required TResult Function(FailureResult<dynamic> failure) failureHappened,
+    required TResult Function(void Function(BuildContext) callback)
+        contextCallbackTriggered,
+  }) {
+    return contextCallbackTriggered(callback);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(bool isLoading)? loadingChanged,
+    TResult? Function()? failureCleared,
+    TResult? Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult? Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
+  }) {
+    return contextCallbackTriggered?.call(callback);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(bool isLoading)? loadingChanged,
+    TResult Function()? failureCleared,
+    TResult Function(FailureResult<dynamic> failure)? failureHappened,
+    TResult Function(void Function(BuildContext) callback)?
+        contextCallbackTriggered,
+    required TResult orElse(),
+  }) {
+    if (contextCallbackTriggered != null) {
+      return contextCallbackTriggered(callback);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadingChanged value) loadingChanged,
+    required TResult Function(FailureCleared value) failureCleared,
+    required TResult Function(FailureHappened value) failureHappened,
+    required TResult Function(ContextCallbackTriggered value)
+        contextCallbackTriggered,
+  }) {
+    return contextCallbackTriggered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadingChanged value)? loadingChanged,
+    TResult? Function(FailureCleared value)? failureCleared,
+    TResult? Function(FailureHappened value)? failureHappened,
+    TResult? Function(ContextCallbackTriggered value)? contextCallbackTriggered,
+  }) {
+    return contextCallbackTriggered?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadingChanged value)? loadingChanged,
+    TResult Function(FailureCleared value)? failureCleared,
+    TResult Function(FailureHappened value)? failureHappened,
+    TResult Function(ContextCallbackTriggered value)? contextCallbackTriggered,
+    required TResult orElse(),
+  }) {
+    if (contextCallbackTriggered != null) {
+      return contextCallbackTriggered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ContextCallbackTriggered implements HelperBlocEvent {
+  const factory ContextCallbackTriggered(
+      final void Function(BuildContext) callback) = _$ContextCallbackTriggered;
+
+  void Function(BuildContext) get callback;
+  @JsonKey(ignore: true)
+  _$$ContextCallbackTriggeredCopyWith<_$ContextCallbackTriggered>
+      get copyWith => throw _privateConstructorUsedError;
 }
