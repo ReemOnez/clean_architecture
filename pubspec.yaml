@@ -16,13 +16,23 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   dio: ^5.1.1
+  # service locater
   get_it: ^7.2.0
+  # DataBase
   sqflite: ^2.2.0+3
+  # Connection checker
   connectivity_plus: ^3.0.3
+  # State management
   flutter_bloc: ^8.1.2
+  # Local storage
   shared_preferences: ^2.1.0
   freezed_annotation: ^2.2.0
+  # Responsive screens
   flutter_screenutil: ^5.9.0
+  # compare dart objects
+  equatable: ^2.0.5
+  #date format
+  intl: ^0.18.1
 
 
 dev_dependencies:
