@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class Article extends Equatable {
+class ArticleEntity extends Equatable {
   final int? id;
   final String? author, title, description, url, urlToImage, publishedAt, content;
 
-  const Article(
+  const ArticleEntity(
     this.id,
     this.author,
     this.title,
