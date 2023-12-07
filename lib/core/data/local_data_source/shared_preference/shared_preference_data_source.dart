@@ -1,4 +1,4 @@
-import 'package:clean_project/constants.dart';
+import 'package:clean_project/helpers/constants.dart';
 import 'package:clean_project/core/data/local_data_source/shared_preference/shared_preference_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clean_project/injection.dart';
