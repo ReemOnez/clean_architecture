@@ -4,7 +4,7 @@ class ArticleEntity extends Equatable {
   final int? id;
   final String? author, title, description, url, urlToImage, publishedAt, content;
 
-  const ArticleEntity(
+  const ArticleEntity({
     this.id,
     this.author,
     this.title,
@@ -13,7 +13,7 @@ class ArticleEntity extends Equatable {
     this.urlToImage,
     this.publishedAt,
     this.content,
-  );
+  });
 
   @override
   /// props decides which objects we should consider for object comparison

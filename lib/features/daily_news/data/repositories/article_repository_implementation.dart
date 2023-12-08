@@ -7,16 +7,17 @@ import 'package:clean_project/features/daily_news/domain/repositories/article_re
 import 'package:clean_project/helpers/constants/urls.dart';
 
 class ArticleRepositoryImpl extends BaseRepository implements ArticleRepository {
-  late NetworkDataSource networkDataSource;
-  late LocalDataSource localDataSource;
+  final NetworkDataSource networkDataSource;
+  final LocalDataSource localDataSource;
 
-  ArticleRepositoryImpl({required NetworkDataSource networkDataSource, required LocalDataSource localDataSource});
+  ArticleRepositoryImpl(this.networkDataSource, this.localDataSource);
 
-  Future<DataResult<ArticleModel>> getNewsArticle() {
+  @override
+  Future<DataResult<List<ArticleModel>?>> getNewsArticles() async {
     return request(
       () async {
-        return await networkDataSource.get(endPoint: Urls.photosUrl) as DataResult<ArticleModel>;
-
+        return await networkDataSource.get(endPoint: Urls.photosUrl);
+        //as DataResult<List<ArticleModel>>;
       },
       //   localCall: () {
       // return localDataSource.getObject(tableName: 'jshb', whereCondition: '', values: [], fromJson: () {});
