@@ -24,8 +24,7 @@ abstract class NetworkDataSource {
   NetworkDataSource(this._dio);
 
   Future<DataResult<T?>> get<T>(
-      {required String endPoint,
-      required Map<String, dynamic> parameters,
+      {required String endPoint, Map<String, dynamic>? parameters,
       int Function(int, int)? onReceive,
       T Function(Map<String, dynamic>)? fromJson}) async {
     return wrapNetworkRequestWithTryCatch(() async {
