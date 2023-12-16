@@ -23,27 +23,3 @@ abstract class BaseRepository {
     return data;
   }
 }
-
-/// Testing Example
-// abstract class IFakeRepository {
-//   Future<DataResult<bool>> logIn(String name, String password);
-// }
-//
-// class FakerRepository extends BaseRepository implements IFakeRepository {
-//   late NetworkDataSource networkDataSource;
-//   late LocalDataSource localDataSource;
-//
-//   @override
-//   Future<DataResult<bool>> logIn(String name, String password) {
-//    return  request(() {
-//       /// actual code for Login feature
-//       return networkDataSource.post(endPoint: 'sjhdbskbv/sdkvjhb/aldvn', parameters: {}, data: {"name": name, "password": password});
-//     }, localCall: () {
-//       return localDataSource.getObject(tableName: 'jshb', whereCondition: '', values: [], fromJson: () {})
-//       ,
-//     },
-//         successRemoteCall: (data) {
-//           return localDataSource.insertObject(tableName: 'kfjv', data: data.toJson());
-//         });
-//   }
-// }

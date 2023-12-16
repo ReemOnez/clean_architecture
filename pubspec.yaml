@@ -26,13 +26,16 @@ dependencies:
   flutter_bloc: ^8.1.2
   # Local storage
   shared_preferences: ^2.1.0
+  # generating
   freezed_annotation: ^2.2.0
   # Responsive screens
   flutter_screenutil: ^5.9.0
   # compare dart objects
   equatable: ^2.0.5
-  #date format
+  # date format
   intl: ^0.18.1
+  # print logs
+  logger: ^2.0.2+1
 
 
 dev_dependencies:

@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'package:clean_project/core/data/data_sources/remote/i_remote_data_source.dart';
 import 'package:clean_project/core/data/models/data_result_model.dart';
 import 'package:clean_project/core/data/models/failure_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
 
-abstract class NetworkDataSource {
+class RemoteDataSource implements IRemoteDataSource {
   final Dio _dio;
+  final Logger logger;
 
-  String? getFailureErrorMessage(Response response);
+  RemoteDataSource(this._dio, this.logger);
 
   String get unAuthorized => 'unAuthorized';
 
@@ -21,18 +24,23 @@ abstract class NetworkDataSource {
 
   String get internalServerError => 'Internal server error';
 
-  NetworkDataSource(this._dio);
-
-  Future<DataResult<T?>> get<T>(
-      {required String endPoint,
-      required Map<String, dynamic> parameters,
-      int Function(int, int)? onReceive,
-      T Function(Map<String, dynamic>)? fromJson}) async {
-    return wrapNetworkRequestWithTryCatch(() async {
-      return _dio.get(endPoint, queryParameters: parameters, onReceiveProgress: onReceive);
+  @override
+  Future<DataResult<T?>> get<T>({
+    required String endPoint,
+    required Map<String, dynamic> parameters,
+    int Function(int, int)? onReceive,
+    T Function(Map<String, dynamic>)? fromJson,
+  }) async {
+    return wrapRemoteRequestWithTryCatch(() async {
+      return _dio.get(
+        endPoint,
+        queryParameters: parameters,
+        onReceiveProgress: onReceive,
+      );
     }, fromJson);
   }
 
+  @override
   Future<DataResult<T?>> post<T>(
       {required String endPoint,
       required Map<String, dynamic> parameters,
@@ -40,11 +48,18 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       Map<String, dynamic>? data}) async {
-    return wrapNetworkRequestWithTryCatch(() async {
-      return _dio.post(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
+    return wrapRemoteRequestWithTryCatch(() async {
+      return _dio.post(
+        endPoint,
+        queryParameters: parameters,
+        onReceiveProgress: onReceive,
+        onSendProgress: onSend,
+        data: data,
+      );
     }, fromJson);
   }
 
+  @override
   Future<DataResult<T?>> delete<T>(
       {required String endPoint,
       required Map<String, dynamic> parameters,
@@ -52,11 +67,12 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapNetworkRequestWithTryCatch(() async {
+    return wrapRemoteRequestWithTryCatch(() async {
       return _dio.delete(endPoint, queryParameters: parameters, data: data);
     }, fromJson);
   }
 
+  @override
   Future<DataResult<T?>> put<T>(
       {required String endPoint,
       required Map<String, dynamic> parameters,
@@ -64,11 +80,18 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapNetworkRequestWithTryCatch(() async {
-      return _dio.put(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
+    return wrapRemoteRequestWithTryCatch(() async {
+      return _dio.put(
+        endPoint,
+        queryParameters: parameters,
+        onReceiveProgress: onReceive,
+        onSendProgress: onSend,
+        data: data,
+      );
     }, fromJson);
   }
 
+  @override
   Future<DataResult<T?>> patch<T>(
       {required String endPoint,
       required Map<String, dynamic> parameters,
@@ -76,7 +99,7 @@ abstract class NetworkDataSource {
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
       T? data}) async {
-    return wrapNetworkRequestWithTryCatch(() async {
+    return wrapRemoteRequestWithTryCatch(() async {
       return _dio.patch(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
     }, fromJson);
   }
@@ -105,12 +128,13 @@ abstract class NetworkDataSource {
     }
   }
 
-  Future<DataResult<T?>> wrapNetworkRequestWithTryCatch<T>(
-    Future<Response<dynamic>> Function() callBackFunction,
+  @override
+  Future<DataResult<T?>> wrapRemoteRequestWithTryCatch<T>(
+    Future<Response<dynamic>> Function() requestFunction,
     T Function(Map<String, dynamic>)? fromJson,
   ) async {
     try {
-      final response = await callBackFunction();
+      final response = await requestFunction();
       if (response.statusCode != null) {
         if ((response.statusCode!) / 100 == 2) {
           return SuccessResult(response.data != null ? fromJson?.call(jsonDecode(response.data)) : response.data);
@@ -118,13 +142,21 @@ abstract class NetworkDataSource {
           return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
         }
       } else {
+        logger.d('Something went wrong');
         throw Error();
       }
-    } on DioError catch (error) {
+    } on DioException catch (error, stackTrace) {
+      logger.d('DioException : error: $error, stackTrace: $stackTrace');
       return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
     } catch (error) {
       debugPrint('Null status code $error');
       rethrow;
     }
+  }
+
+  @override
+  String? getFailureErrorMessage(Response response) {
+    // should be implemented according to the backend response structure
+    return 'error message';
   }
 }
