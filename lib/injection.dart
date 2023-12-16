@@ -1,15 +1,16 @@
+import 'package:clean_project/features/daily_news/domain/usecases/get_article_usecase.dart';
 import 'package:clean_project/helpers/constants/urls.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-GetIt getIt = GetIt.instance;
+GetIt sl = GetIt.instance;
 
 void init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => sharedPreferences);
 
-  getIt.registerLazySingleton(
+  sl.registerLazySingleton(
     () => Dio(
       BaseOptions(
         baseUrl: Urls.baseUrl,
@@ -26,4 +27,12 @@ void init() async {
       ),
     ),
   );
+
+
+  //UseCases
+  sl.registerSingleton<GetArticleUseCase>(
+      GetArticleUseCase(sl())
+  );
+
+
 }

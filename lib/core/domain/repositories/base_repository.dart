@@ -6,16 +6,23 @@ import 'package:clean_project/core/services/connectivity_service_interface.dart'
 abstract class BaseRepository {
   ConnectivityServiceInterface connectivityServiceInterface = ConnectivityService();
 
-  Future<DataResult<T>> request<T>(Future<DataResult<T>> Function() remoteCall,
-      {Future<DataResult<T>> Function()? localCall, Future<DataResult<int>> Function(T? data)? successRemoteCall}) async {
+  Future<DataResult<T>> request<T>(
+    Future<DataResult<T>> Function() remoteCall, {
+    Future<DataResult<T>> Function()? localCall,
+    Future<DataResult<int>> Function(T? data)? successRemoteCall,
+  }) async {
     late DataResult<T> data;
     if (connectivityServiceInterface.isOnline) {
       data = await remoteCall();
       if (data.isSuccessResult) {
+        print('data.isSuccessResult data.isSuccessResult data.isSuccessResult');
         final successRemoteCallData = await successRemoteCall?.call(data.dataResult);
         if (successRemoteCallData != null && successRemoteCallData.isFailureResult) {
           data = FailureResult(FailureModel(errorMessage: 'Failed to insert data into database'));
         }
+      } else {
+        print('!data.isSuccessResult !data.isSuccessResult !data.isSuccessResult');
+        data = FailureResult(FailureModel(errorMessage: 'Something went wrong'));
       }
     } else {
       data = (await localCall?.call()) ?? FailureResult(FailureModel(errorMessage: 'No internet connection'));

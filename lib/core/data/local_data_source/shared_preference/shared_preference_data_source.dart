@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clean_project/injection.dart';
 
 class SharedPreferenceDataSource implements SharedPreferenceInterface {
-  final SharedPreferences _sharedPreferences = getIt<SharedPreferences>();
+  final SharedPreferences _sharedPreferences = sl<SharedPreferences>();
 
   Future<SharedPreferences?> getPreference() async {
     return _sharedPreferences;
