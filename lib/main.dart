@@ -5,6 +5,7 @@ import 'package:clean_project/injection.dart' as injection;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  /// initialize dependencies injections
   injection.init();
   runApp(const MyApp());
 }

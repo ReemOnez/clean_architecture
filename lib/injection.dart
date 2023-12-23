@@ -3,14 +3,20 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-GetIt getIt = GetIt.instance;
+final serviceLocator = GetIt.instance;
 
-void init() async {
+Future<void>  init() async {
+  essentialServices();
+}
+
+Future<void> essentialServices() async {
+  /// SharedPreferences service
   final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton(() => sharedPreferences);
+  serviceLocator.registerLazySingleton(() => sharedPreferences);
 
-  getIt.registerLazySingleton(
-    () => Dio(
+  /// Dio service
+  serviceLocator.registerLazySingleton(
+        () => Dio(
       BaseOptions(
         baseUrl: Urls.baseUrl,
         contentType: 'application/json',
@@ -27,3 +33,49 @@ void init() async {
     ),
   );
 }
+
+/// Service dependency injection example
+// Future<void> firstServiceDependencies() async {
+//   /// Presentation Layer - Blocs
+//   serviceLocator.registerFactory(
+//         () => FirstServiceListBloc(
+//       FirstServiceService: serviceLocator(),
+//     ),
+//   );
+//
+//   serviceLocator.registerFactory(
+//         () => FirstServiceDetailBloc(
+//       FirstServiceService: serviceLocator(),
+//     ),
+//   );
+//
+//   /// Application Layer - facades
+//   serviceLocator.registerLazySingleton(
+//         () => FirstServiceFacadeService(
+//       repository: serviceLocator(),
+//     ),
+//   );
+//
+//   /// Infrastructure Layer
+//   // repositories
+//   serviceLocator.registerLazySingleton(
+//         () => ProductRepository(
+//       connectivity: serviceLocator(),
+//       productLocalDataProvider: serviceLocator(),
+//       productRemoteDataProvider: serviceLocator(),
+//     ),
+//   );
+//
+//   //data sources
+//   serviceLocator.registerLazySingleton(
+//         () => ProductLocalDataProvider(),
+//   );
+//   serviceLocator.registerLazySingleton(
+//         () => ProductRemoteDataProvider(),
+//   );
+//
+//   // Common and core
+//   serviceLocator.registerLazySingleton(
+//         () => Connectivity(),
+//   );
+// }
