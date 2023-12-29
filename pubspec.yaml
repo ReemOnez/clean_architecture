@@ -71,10 +71,10 @@ flutter:
   fonts:
     - family: Muli
       fonts:
-        - asset: assets/muli/fonts/Muli.ttf
-        - asset: assets/muli/fonts/Muli-Bold.ttf
+        - asset: assets/fonts/muli/Muli.ttf
+        - asset: assets/fonts/muli/Muli-Bold.ttf
           weight: 700
-        - asset: assets/muli/fonts/Muli-Light.ttf
+        - asset: assets/fonts/muli/Muli-Light.ttf
           weight: 300
 
   # For details regarding fonts from package dependencies,
