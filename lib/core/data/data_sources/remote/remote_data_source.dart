@@ -2,15 +2,16 @@ import 'dart:convert';
 import 'package:clean_project/core/data/data_sources/remote/i_remote_data_source.dart';
 import 'package:clean_project/core/data/models/data_result_model.dart';
 import 'package:clean_project/core/data/models/failure_model.dart';
+import 'package:clean_project/helpers/constants/constants.dart';
+import 'package:clean_project/helpers/constants/enums.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
 
 class RemoteDataSource implements IRemoteDataSource {
   final Dio _dio;
-  final Logger logger;
+  final Logger _logger;
 
-  RemoteDataSource(this._dio, this.logger);
+  RemoteDataSource(this._dio, this._logger);
 
   String get unAuthorized => 'unAuthorized';
 
@@ -27,7 +28,7 @@ class RemoteDataSource implements IRemoteDataSource {
   @override
   Future<DataResult<T?>> get<T>({
     required String endPoint,
-    required Map<String, dynamic> parameters,
+    Map<String, dynamic>? parameters,
     int Function(int, int)? onReceive,
     T Function(Map<String, dynamic>)? fromJson,
   }) async {
@@ -43,7 +44,7 @@ class RemoteDataSource implements IRemoteDataSource {
   @override
   Future<DataResult<T?>> post<T>(
       {required String endPoint,
-      required Map<String, dynamic> parameters,
+      Map<String, dynamic>? parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
       T Function(Map<String, dynamic>)? fromJson,
@@ -135,6 +136,7 @@ class RemoteDataSource implements IRemoteDataSource {
   ) async {
     try {
       final response = await requestFunction();
+      _logger.d('response status code is ${response.statusCode}');
       if (response.statusCode != null) {
         if ((response.statusCode!) / 100 == 2) {
           return SuccessResult(response.data != null ? fromJson?.call(jsonDecode(response.data)) : response.data);
@@ -142,21 +144,22 @@ class RemoteDataSource implements IRemoteDataSource {
           return FailureResult(FailureModel(errorMessage: getErrorMessage(response), statusCode: response.statusCode));
         }
       } else {
-        logger.d('Something went wrong');
-        throw Error();
+        _logger.d('Something went wrong - Server failure');
+        throw Exception(ErrorDefaultValues.Server_Failure);
       }
     } on DioException catch (error, stackTrace) {
-      logger.d('DioException : error: $error, stackTrace: $stackTrace');
+      _logger.e(ErrorLogType.dioError, error: error, stackTrace: stackTrace);
       return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
-    } catch (error) {
-      debugPrint('Null status code $error');
+    } catch (error, stacktrace) {
+      ///a bug in the request
+      _logger.e(ErrorLogType.unknownServerError, error: error, stackTrace: stacktrace);
       rethrow;
     }
   }
 
   @override
   String? getFailureErrorMessage(Response response) {
-    // should be implemented according to the backend response structure
+    /// should be implemented according to the backend response structure
     return 'error message';
   }
 }

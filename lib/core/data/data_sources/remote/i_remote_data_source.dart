@@ -2,8 +2,12 @@ import 'package:clean_project/core/data/models/data_result_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class IRemoteDataSource {
-  Future<DataResult<T?>> get<T>(
-      {required String endPoint, required Map<String, dynamic> parameters, int Function(int, int)? onReceive, T Function(Map<String, dynamic>)? fromJson});
+  Future<DataResult<T?>> get<T>({
+    required String endPoint,
+    required Map<String, dynamic> parameters,
+    int Function(int, int)? onReceive,
+    T Function(Map<String, dynamic>)? fromJson,
+  });
 
   Future<DataResult<T?>> post<T>(
       {required String endPoint,
