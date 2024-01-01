@@ -1,1 +1,1 @@
-abstract class ITodoLocalDataSource {}
+abstract class IToDoLocalDataSource {}

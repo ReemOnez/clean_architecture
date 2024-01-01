@@ -5,15 +5,15 @@ import 'package:clean_project/features/todo_list/domain/repositories/i_todo_repo
 import 'package:clean_project/features/todo_list/infrastructure/data_sources/local/todo_local_data_source.dart';
 import 'package:clean_project/features/todo_list/infrastructure/data_sources/remote/todo_remote_data_source.dart';
 
-class TodoRepository extends BaseRepository implements IToDoRepository {
-  TodoRepository(
+class ToDoRepository extends BaseRepository implements IToDoRepository {
+  ToDoRepository(
     super.logger,
     this.remoteDataSource,
     this.localDataSource,
   );
 
   final ToDoRemoteDataSource remoteDataSource;
-  final TodoLocalDataSource localDataSource;
+  final ToDoLocalDataSource localDataSource;
 
   @override
   Future<DataResult<List<ToDo>?>> getToDoList() => request(

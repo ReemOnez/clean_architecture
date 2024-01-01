@@ -1,3 +1,4 @@
+import 'package:clean_project/features/todo_list/presentation/pages/todo_list_screen.dart';
 import 'package:clean_project/helpers/mixins/size_mixin.dart';
 import 'package:clean_project/helpers/mixins/theme_mixin.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> with SizeMixin, ThemeMixin {
       theme: ThemeData(
         fontFamily: fontFamily,
       ),
+      home: ToDoListScreen(),
     );
   }
 }

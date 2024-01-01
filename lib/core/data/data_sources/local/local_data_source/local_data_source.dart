@@ -10,11 +10,11 @@ class LocalDataSource implements ILocalDataSource {
   late Future<void> dataBaseInit;
 
   LocalDataSource({
-    required String dataBaseName,
-    required int version,
-    required List<String> schema,
+    String? dataBaseName,
+    int? version,
+    List<String>? schema,
   }) {
-    dataBaseInit = initDataBase(dataBaseName: dataBaseName, version: version, schema: schema);
+    dataBaseInit = initDataBase(dataBaseName: dataBaseName!, version: version!, schema: schema!);
   }
 
   @override
