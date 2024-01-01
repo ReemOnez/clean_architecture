@@ -6,7 +6,7 @@ abstract class IRemoteDataSource {
     required String endPoint,
     required Map<String, dynamic> parameters,
     int Function(int, int)? onReceive,
-    T Function(Map<String, dynamic>)? fromJson,
+    T Function(Object?)? fromJson,
   });
 
   Future<DataResult<T?>> post<T>(
@@ -14,7 +14,7 @@ abstract class IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object?) fromJson,
       Map<String, dynamic>? data});
 
   Future<DataResult<T?>> delete<T>(
@@ -22,7 +22,7 @@ abstract class IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object?) fromJson,
       T? data});
 
   Future<DataResult<T?>> put<T>(
@@ -30,7 +30,7 @@ abstract class IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object?) fromJson,
       T? data});
 
   Future<DataResult<T?>> patch<T>(
@@ -38,13 +38,13 @@ abstract class IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object?) fromJson,
       T? data});
 
-  String? getFailureErrorMessage(Response response);
+  String bodyToString(dynamic data);
 
   Future<DataResult<T?>> wrapRemoteRequestWithTryCatch<T>(
     Future<Response<dynamic>> Function() requestFunction,
-    T Function(Map<String, dynamic>)? fromJson,
+    T Function(Object?) fromJson,
   );
 }

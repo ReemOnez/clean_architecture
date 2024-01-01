@@ -17,6 +17,9 @@ class ToDoModel extends ToDo {
     );
   }
 
+  static List<ToDoModel> fromJsonToDoList(dynamic json) =>
+      (json as List).map((e) => ToDoModel.fromJson(e)).toList();
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

@@ -30,7 +30,7 @@ class RemoteDataSource implements IRemoteDataSource {
     required String endPoint,
     Map<String, dynamic>? parameters,
     int Function(int, int)? onReceive,
-    T Function(Map<String, dynamic>)? fromJson,
+    T Function(Object?)? fromJson,
   }) async {
     return wrapRemoteRequestWithTryCatch(() async {
       return _dio.get(
@@ -47,7 +47,7 @@ class RemoteDataSource implements IRemoteDataSource {
       Map<String, dynamic>? parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object)? fromJson,
       Map<String, dynamic>? data}) async {
     return wrapRemoteRequestWithTryCatch(() async {
       return _dio.post(
@@ -66,7 +66,7 @@ class RemoteDataSource implements IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object)? fromJson,
       T? data}) async {
     return wrapRemoteRequestWithTryCatch(() async {
       return _dio.delete(endPoint, queryParameters: parameters, data: data);
@@ -79,7 +79,7 @@ class RemoteDataSource implements IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object)? fromJson,
       T? data}) async {
     return wrapRemoteRequestWithTryCatch(() async {
       return _dio.put(
@@ -98,7 +98,7 @@ class RemoteDataSource implements IRemoteDataSource {
       required Map<String, dynamic> parameters,
       int Function(int, int)? onReceive,
       int Function(int, int)? onSend,
-      T Function(Map<String, dynamic>)? fromJson,
+      T Function(Object)? fromJson,
       T? data}) async {
     return wrapRemoteRequestWithTryCatch(() async {
       return _dio.patch(endPoint, queryParameters: parameters, onReceiveProgress: onReceive, onSendProgress: onSend, data: data);
@@ -132,7 +132,7 @@ class RemoteDataSource implements IRemoteDataSource {
   @override
   Future<DataResult<T?>> wrapRemoteRequestWithTryCatch<T>(
     Future<Response<dynamic>> Function() requestFunction,
-    T Function(Map<String, dynamic>)? fromJson,
+    T Function(Object)? fromJson,
   ) async {
     try {
       final response = await requestFunction();
@@ -158,8 +158,11 @@ class RemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  String? getFailureErrorMessage(Response response) {
-    /// should be implemented according to the backend response structure
-    return 'error message';
-  }
+  String bodyToString(data) => data?.toString() ?? 'Null';
+
+  ///default error message if [failureToString] returned null.
+  String get defaultErrorMessage => 'Something went wrong';
+
+  ///extract error message from [response]
+  String? getFailureErrorMessage(Response response) => response.statusMessage;
 }
