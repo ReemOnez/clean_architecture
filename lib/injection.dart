@@ -4,6 +4,7 @@ import 'package:clean_project/features/todo_list/domain/usecases/todo_usecase.da
 import 'package:clean_project/features/todo_list/infrastructure/data_sources/local/todo_local_data_source.dart';
 import 'package:clean_project/features/todo_list/infrastructure/data_sources/remote/todo_remote_data_source.dart';
 import 'package:clean_project/features/todo_list/infrastructure/repositories/todo_repository.dart';
+import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
 import 'package:clean_project/helpers/constants/urls.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -13,8 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
-  essentialServices();
-//  toDoFeature();
+  await essentialServices();
+  //toDoFeature();
 }
 
 Future<void> essentialServices() async {
@@ -46,25 +47,14 @@ Future<void> essentialServices() async {
       printer: PrettyPrinter(),
     ),
   );
-  serviceLocator.registerLazySingleton<BaseUseCase>(() => ToDoUseCase(serviceLocator()));
-
   serviceLocator.registerLazySingleton(() => ToDoRemoteDataSource(serviceLocator(), serviceLocator()));
   serviceLocator.registerLazySingleton(() => ToDoLocalDataSource());
   serviceLocator.registerLazySingleton<IToDoRepository>(() => ToDoRepository(serviceLocator(), serviceLocator(), serviceLocator()));
+  serviceLocator.registerLazySingleton(() => ToDoUseCase(serviceLocator()));
+  serviceLocator.registerFactory(() => ToDoBloc(serviceLocator()));
 }
 
-Future<void> toDoFeature() async {
-  serviceLocator.registerLazySingleton(() => ToDoRemoteDataSource(serviceLocator(), serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ToDoLocalDataSource());
-  serviceLocator.registerLazySingleton<IToDoRepository>(() => ToDoRepository(serviceLocator(), serviceLocator(), serviceLocator()));
-  serviceLocator.registerLazySingleton<BaseUseCase>(() => ToDoUseCase(serviceLocator()));
-  // serviceLocator.registerLazySingleton(() => ToDoBloc(serviceLocator(), serviceLocator()));
-  // serviceLocator<Dio>().interceptors.addAll(
-  //   <Interceptor>[
-  //     //  JsonDecoderInterceptor(),
-  //   ],
-  // );
-}
+Future<void> toDoFeature() async {}
 
 /// Service dependency injection example
 // Future<void> firstServiceDependencies() async {

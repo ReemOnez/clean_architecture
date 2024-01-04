@@ -1,7 +1,7 @@
-import 'package:clean_project/features/todo_list/domain/repositories/i_todo_repository.dart';
-import 'package:clean_project/features/todo_list/domain/usecases/todo_usecase.dart';
+import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
+import 'package:clean_project/features/todo_list/presentation/bloc/todo_state.dart';
 import 'package:flutter/material.dart';
-import 'package:clean_project/injection.dart' as Sl;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ToDoListScreen extends StatefulWidget {
   const ToDoListScreen({super.key});
@@ -19,15 +19,33 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('TODO LIST'),
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('blaaaaaaaaa'),
-              ElevatedButton(
-                onPressed: () async => Future.delayed(const Duration(seconds: 4)).then((value) => ToDoUseCase(Sl.serviceLocator<IToDoRepository>()).todoRepository),
-                child: const Text('Press Here'),
-              )
+              BlocBuilder<ToDoBloc, ToDoState>(
+                builder: (context, state) {
+                  if (state is ToDoListLoading) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (state is ToDoListError) {
+                    return const Text('ERRRRRRRRRRROOOOOOOOOR', style: TextStyle(color: Colors.red));
+                  }
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (index, context) {
+                      return Text('$index HIIIIIIIIIIIII');
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),

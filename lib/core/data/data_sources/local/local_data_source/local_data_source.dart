@@ -14,7 +14,7 @@ class LocalDataSource implements ILocalDataSource {
     int? version,
     List<String>? schema,
   }) {
-    dataBaseInit = initDataBase(dataBaseName: dataBaseName!, version: version!, schema: schema!);
+    dataBaseInit = initDataBase(dataBaseName: 'dataBaseName!', version: 2, schema: ['schema']);
   }
 
   @override
