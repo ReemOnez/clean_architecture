@@ -136,7 +136,7 @@ class RemoteDataSource implements IRemoteDataSource {
   ) async {
     try {
       final response = await requestFunction();
-      _logger.d('response status code is ${response.statusCode}');
+      // _logger.d('response status code is ${response.statusCode}');
       if (response.statusCode != null) {
         if ((response.statusCode!) / 100 == 2) {
           return SuccessResult(response.data != null ? fromJson?.call(jsonDecode(response.data)) : response.data);
@@ -149,7 +149,8 @@ class RemoteDataSource implements IRemoteDataSource {
       }
     } on DioException catch (error, stackTrace) {
       _logger.e(ErrorLogType.dioError, error: error, stackTrace: stackTrace);
-      return FailureResult(FailureModel(errorMessage: getErrorMessage(error.response!), statusCode: error.response!.statusCode));
+      _logger.e(error);
+      return FailureResult(FailureModel(errorMessage: error.response !=null ? getErrorMessage(error.response!) : 'blaaaaaaaaaaa', statusCode: error.response!.statusCode));
     } catch (error, stacktrace) {
       ///a bug in the request
       _logger.e(ErrorLogType.unknownServerError, error: error, stackTrace: stacktrace);

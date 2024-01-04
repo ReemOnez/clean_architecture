@@ -5,31 +5,31 @@ abstract class ILocalDataSource {
 
   Future<DataResult<int>> insertObject({
     required String tableName,
-    required Map<String, dynamic> data,
+    required Map<String, dynamic> Function() toMap,
   });
 
   Future<DataResult<int>> insertObjects({
     required String tableName,
-    required List<Map<String, dynamic>> data,
+    required List<Map<String, dynamic> Function()> toMaps,
   });
 
   Future<DataResult<int>> delete({
     required String tableName,
-    required String whereCondition,
-    required List<dynamic> values,
+    required String? whereCondition,
+    required List<dynamic>? values,
   });
 
-  Future<DataResult<T>> getObject<T>({
+  Future<DataResult<T?>> getObject<T>({
     required String tableName,
-    required String whereCondition,
-    required List<dynamic> values,
+    required String? whereCondition,
+    required List<dynamic>? values,
     required T Function(Map<String, dynamic>) fromJson,
   });
 
   Future<DataResult<List<T>>> getObjects<T>({
     required String tableName,
-    required String whereCondition,
-    required List<dynamic> values,
+    required String? whereCondition,
+    required List<dynamic>? values,
     required T Function(Map<String, dynamic>) fromJson,
   });
 

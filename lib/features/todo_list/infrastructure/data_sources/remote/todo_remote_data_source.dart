@@ -10,7 +10,7 @@ class ToDoRemoteDataSource extends RemoteDataSource implements IToDoRemoteDataSo
   static const String _todoEndPoint = 'todos';
 
   @override
-  Future<DataResult<List<ToDo>?>> getToDoList() => get(
+  Future<DataResult<List<ToDoModel>?>> getToDoList() => get(
         endPoint: _todoEndPoint,
         fromJson: ToDoModel.fromJsonToDoList,
       );

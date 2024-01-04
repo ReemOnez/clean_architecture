@@ -13,20 +13,34 @@ abstract class BaseRepository {
   Future<DataResult<T>> request<T>({
     required Future<DataResult<T>> Function() remoteCall,
     Future<DataResult<T>> Function()? localCall,
-    Future<DataResult<int>> Function(T? data)? successRemoteCall,
+    Future<DataResult<T>> Function()? successRemoteCall,
+    Future<DataResult<int>> Function(T data)? saveRemoteDataCall,
   }) async {
-    late DataResult<T> data;
+    late DataResult<T> dataResult;
     if (connectivityServiceInterface.isOnline) {
-      data = await remoteCall();
-      if (data.isSuccessResult) {
-        final successRemoteCallData = await successRemoteCall?.call(data.dataResult);
+      dataResult = await remoteCall();
+      if (dataResult.isSuccessResult) {
+        if (saveRemoteDataCall != null && dataResult.dataResult != null) {
+          final saveResult = await saveRemoteDataCall.call(dataResult.dataResult as T);
+          logger.i('<BaseRepository>: Inserted rows count: ${saveResult.dataResult}');
+          // if (saveResult.isFailure) {
+          //   onCacheFailure?.call(saveResult.failure!);
+          // } else {
+          //   logger.i('<BaseRepository>: Inserted rows count: ${saveResult.data}');
+          //   onCacheSuccess?.call(saveResult.data!);
+          // }
+        }
+        final successRemoteCallData = await successRemoteCall?.call();
         if (successRemoteCallData != null && successRemoteCallData.isFailureResult) {
-          data = FailureResult(FailureModel(errorMessage: 'Failed to insert data into database'));
+          dataResult = FailureResult(FailureModel(errorMessage: 'Failed to insert data into database'));
         }
       }
     } else {
-      data = (await localCall?.call()) ?? FailureResult(FailureModel(errorMessage: 'No internet connection'));
+      dataResult = (await localCall?.call()) ?? FailureResult(FailureModel(errorMessage: 'No internet connection'));
+      print('localCall localCall localCall localCall');
+      print(dataResult.dataResult);
+      print('localCall localCall localCall localCall');
     }
-    return data;
+    return dataResult;
   }
 }
