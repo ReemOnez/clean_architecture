@@ -18,8 +18,7 @@ class ToDoRepository extends BaseRepository implements IToDoRepository {
   @override
   Future<DataResult<List<ToDoModel>?>> getToDoList() => request(
         remoteCall: () => remoteDataSource.getToDoList(),
-        saveRemoteDataCall: (todos) =>  localDataSource.insertTodos(todos),
+        saveRemoteDataCall: (todos) => localDataSource.insertTodos(todos),
         localCall: localDataSource.getTodos,
-        // saveRemoteDataFunction: (posts) => localDataSource.insertPosts(posts),
       );
 }

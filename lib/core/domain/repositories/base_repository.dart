@@ -22,7 +22,7 @@ abstract class BaseRepository {
       if (dataResult.isSuccessResult) {
         if (saveRemoteDataCall != null && dataResult.dataResult != null) {
           final saveResult = await saveRemoteDataCall.call(dataResult.dataResult as T);
-          logger.i('<BaseRepository>: Inserted rows count: ${saveResult.dataResult}');
+          // logger.i('<BaseRepository>: Inserted rows count: ${saveResult.dataResult}');
           // if (saveResult.isFailure) {
           //   onCacheFailure?.call(saveResult.failure!);
           // } else {
@@ -37,9 +37,6 @@ abstract class BaseRepository {
       }
     } else {
       dataResult = (await localCall?.call()) ?? FailureResult(FailureModel(errorMessage: 'No internet connection'));
-      print('localCall localCall localCall localCall');
-      print(dataResult.dataResult);
-      print('localCall localCall localCall localCall');
     }
     return dataResult;
   }

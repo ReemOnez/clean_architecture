@@ -48,7 +48,7 @@ Future<void> essentialServices() async {
     ),
   );
   serviceLocator.registerLazySingleton(() => ToDoRemoteDataSource(serviceLocator(), serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ToDoLocalDataSource());
+  serviceLocator.registerLazySingleton(() => ToDoLocalDataSource(serviceLocator()));
   serviceLocator.registerLazySingleton<IToDoRepository>(() => ToDoRepository(serviceLocator(), serviceLocator(), serviceLocator()));
   serviceLocator.registerLazySingleton(() => ToDoUseCase(serviceLocator()));
   serviceLocator.registerFactory(() => ToDoBloc(serviceLocator()));

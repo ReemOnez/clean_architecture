@@ -1,20 +1,23 @@
 import 'package:clean_project/core/data/data_sources/local/local_data_source/i_local_data_source.dart';
 import 'package:clean_project/core/data/models/data_result_model.dart';
 import 'package:clean_project/core/data/models/failure_model.dart';
+import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class LocalDataSource implements ILocalDataSource {
   late final Database database;
-  late Future<void> dataBaseInit;
+  late final Future<void> dataBaseInit;
+  final Logger logger;
 
-  LocalDataSource({
-    String? dataBaseName,
-    int? version,
-    List<String>? schema,
+  LocalDataSource(
+    this.logger, {
+    required String dataBaseName,
+    required int version,
+    required List<String> schema,
   }) {
-    dataBaseInit = initDataBase(dataBaseName: 'todo.db', version: 1, schema: []);
+    dataBaseInit = initDataBase(dataBaseName: dataBaseName, version: version, schema: schema);
   }
 
   @override
@@ -23,12 +26,16 @@ class LocalDataSource implements ILocalDataSource {
       join(await getDatabasesPath(), dataBaseName),
       onCreate: (database, version) async {
         for (String sql in schema) {
+          logger.d(sql);
           database.execute(sql);
         }
         return;
       },
       version: version,
     ).then((value) => database = value);
+    /// to check if db does exist
+    final dbExist = await databaseFactory.databaseExists(join(await getDatabasesPath(), dataBaseName));
+    logger.i(dbExist);
   }
 
   @override
