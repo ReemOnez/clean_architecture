@@ -10,12 +10,27 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
 
   ToDoBloc(this.toDoUseCase) : super(ToDoInitial()) {
     on<GetToDoList>(_onToDoRequested);
+    on<NumberChanged>(_onNumberChanged);
+    on<NameChanged>(_onNameChanged);
+    on<CheckFormValidation>(_onCheckFormValidation);
   }
 
   Future<void> _onToDoRequested(GetToDoList event, Emitter<ToDoState> emit) async {
     emit(ToDoListLoading());
     final todoList = await toDoUseCase();
     emit(ToDoListLoaded(todolist: todoList.dataResult));
+  }
+
+  Future<void> _onNameChanged(NameChanged event, Emitter<ToDoState> emit) async {
+    emit(NameUpdateState(name: event.name));
+  }
+
+  Future<void> _onNumberChanged(NumberChanged event, Emitter<ToDoState> emit) async {
+    emit(NumberUpdateState(number: event.number));
+  }
+
+  Future<void> _onCheckFormValidation(CheckFormValidation event, Emitter<ToDoState> emit) async {
+    emit(IsFormValid(number: event.number, name: event.name));
   }
 
 // futureWrapper(

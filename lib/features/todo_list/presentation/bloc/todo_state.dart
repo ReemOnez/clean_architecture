@@ -35,3 +35,33 @@ class ToDoListLoaded extends ToDoState {
   @override
   List<Object?> get props => [todolist];
 }
+
+/// //////// Form states /////////////
+
+class NameUpdateState extends ToDoState {
+  final String? name;
+
+  const NameUpdateState({this.name});
+
+  @override
+  List<Object?> get props => [name];
+}
+
+class NumberUpdateState extends ToDoState {
+  final String? number;
+
+  const NumberUpdateState({this.number});
+
+  @override
+  List<Object?> get props => [number];
+}
+
+class IsFormValid extends ToDoState {
+  final String? name;
+  final String? number;
+
+  const IsFormValid({this.name, this.number});
+
+  @override
+  List<Object?> get props => [name, number];
+}

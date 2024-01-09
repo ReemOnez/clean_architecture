@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   /// initialize dependencies injections
   await init();
   runApp(const MyApp());
@@ -24,15 +25,42 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with SizeMixin, ThemeMixin {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        fontFamily: fontFamily,
+    return MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (_) =>
+        serviceLocator<ToDoBloc>()
+          ..add(GetToDoList()),
       ),
-      home: MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (_) => serviceLocator<ToDoBloc>()..add(GetToDoList()),
+    ],
+      child: MaterialApp(
+        routes: {
+          '/': (context) => const BasicPage(),
+          '/todoScreen': (context) => const ToDoListScreen(),
+        },
+        initialRoute: '/',
+        theme: ThemeData(
+          fontFamily: fontFamily,
         ),
-      ], child: const ToDoListScreen()),
+      ),
     );
+  }
+}
+
+class BasicPage extends StatefulWidget {
+  const BasicPage({super.key});
+
+  @override
+  State<BasicPage> createState() => _BasicPageState();
+}
+
+class _BasicPageState extends State<BasicPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: ElevatedButton(
+              onPressed: () => Navigator.of(context).pushNamed('/todoScreen'),
+              child: const Text('TODO LIST')),
+    ),);
   }
 }

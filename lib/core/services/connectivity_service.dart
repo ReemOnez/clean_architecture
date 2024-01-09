@@ -4,17 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 class ConnectivityService implements ConnectivityServiceInterface {
-  static ConnectivityService? _connectivityService;
+  static final ConnectivityService _connectivityService = ConnectivityService._internal();
 
-  factory ConnectivityService() => _connectivityService ??= ConnectivityService._();
+  factory ConnectivityService() => _connectivityService;
 
-  ConnectivityService._() {
-    initConnectivity();
-  }
+  ConnectivityService._internal();
 
   ConnectivityResult? _connectivityResult;
 
-  void initConnectivity() async {
+  @override
+  Future<bool> get isOnline async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       _connectivityResult = await Connectivity().checkConnectivity();
@@ -25,10 +24,8 @@ class ConnectivityService implements ConnectivityServiceInterface {
       );
     } on PlatformException catch (e) {
       debugPrint('Couldn\'t check connectivity status, ${e.message}');
-      return;
+      return false;
     }
+    return _connectivityResult != ConnectivityResult.none;
   }
-
-  @override
-  bool get isOnline => _connectivityResult != ConnectivityResult.none;
 }

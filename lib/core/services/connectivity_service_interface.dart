@@ -1,3 +1,3 @@
 abstract class ConnectivityServiceInterface {
-  bool get isOnline;
+  Future<bool> get isOnline;
 }

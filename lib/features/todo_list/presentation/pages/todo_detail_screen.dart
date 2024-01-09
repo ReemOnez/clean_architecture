@@ -1,22 +1,23 @@
 import 'package:clean_project/core/presentation/widgets/custom_app_bar.dart';
 import 'package:clean_project/core/presentation/widgets/custom_back_button.dart';
+import 'package:clean_project/core/presentation/widgets/custom_text_field.dart';
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
-import 'package:clean_project/features/todo_list/presentation/bloc/todo_event.dart';
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ToDoListScreen extends StatefulWidget {
-  const ToDoListScreen({super.key});
+class ToDoDetailScreen extends StatefulWidget {
+  const ToDoDetailScreen({super.key});
 
   @override
-  State<ToDoListScreen> createState() => _ToDoListScreenState();
+  State<ToDoDetailScreen> createState() => _ToDoDetailScreenState();
 }
 
-class _ToDoListScreenState extends State<ToDoListScreen> {
+class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
   @override
   void initState() {
+    var bloc = BlocProvider.of(context).state;
     super.initState();
   }
 
@@ -27,6 +28,8 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
 
   @override
   Widget build(BuildContext context) {
+   // final textFocusNode = useFocusNode();
+    final textFieldController = TextEditingController(text:'' );
     return Container(
       color: Theme.of(context).colorScheme.onPrimary,
       child: SafeArea(
@@ -47,20 +50,24 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
               } else if (state is ToDoListError) {
                 return const Text('ERRRRRRRRRRROOOOOOOOOR', style: TextStyle(color: Colors.red));
               } else if (state is ToDoListLoaded) {
-                return ListView.builder(
-                  // physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (index, context) {
-                    return Container(
-                      child: InkWell(
-                        onTap: () {
+                return Column(children: [
+                  CustomTextField(
+                    color: Colors.black,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 6,
+                    hint: '',
+                    hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14.h, color: Colors.grey),
+                  //  textFocusNode: textFocusNode,
+                    textEditingController: textFieldController,
+                    enabled: true,
+                 //   onChanged: (value) => reason.value = textFieldController.text,
+                    validator: (value) {
+                      return null;
+                    },
+                    shouldShowLabel: false,
+                    maxCounterNumber: 501,
 
-                        },
-                        child: Text('$index HIIIIIIIIIIIII'),
-                      ),
-                    );
-                  },
-                );
+                )]);
               }
               return const SizedBox.shrink();
             },

@@ -17,7 +17,8 @@ abstract class BaseRepository {
     Future<DataResult<int>> Function(T data)? saveRemoteDataCall,
   }) async {
     late DataResult<T> dataResult;
-    if (connectivityServiceInterface.isOnline) {
+    if (await connectivityServiceInterface.isOnline) {
+      print('connectivityServiceInterface.isOnline connectivityServiceInterface.isOnline');
       dataResult = await remoteCall();
       if (dataResult.isSuccessResult) {
         if (saveRemoteDataCall != null && dataResult.dataResult != null) {
@@ -36,6 +37,7 @@ abstract class BaseRepository {
         }
       }
     } else {
+      print('connectivityServiceInterface.OFFLINE connectivityServiceInterface.OFFLINE');
       dataResult = (await localCall?.call()) ?? FailureResult(FailureModel(errorMessage: 'No internet connection'));
     }
     return dataResult;

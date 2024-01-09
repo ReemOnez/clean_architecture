@@ -14,4 +14,6 @@ class ToDoLocalDataSource extends BaseLocalDataSource implements IToDoLocalDataS
 
   @override
   Future<DataResult<List<ToDoModel>?>> getTodos() => getObjects(tableName: _tableName, fromJson: ToDoModel.fromJson);
+
+  // Future<void> closeDB() => close();
 }

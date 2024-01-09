@@ -6,7 +6,7 @@ class BaseLocalDataSource extends LocalDataSource {
     ToDoLocalDataSource.createTableQuery,
   ];
 
-  static const String _databaseName = 'todo.db';
+  static const String _databaseName = 'ToDo.db';
   static const int _version = 1;
 
   BaseLocalDataSource(
