@@ -1,3 +1,4 @@
+import 'package:clean_project/config/routes.dart';
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
 import 'package:clean_project/features/todo_list/presentation/pages/todo_detail_screen.dart';
 import 'package:clean_project/features/todo_list/presentation/pages/todo_list_screen.dart';
@@ -32,12 +33,8 @@ class _MyAppState extends State<MyApp> with SizeMixin, ThemeMixin {
         ),
       ],
       child: MaterialApp(
-        routes: {
-          '/': (context) => const BasicPage(),
-          '/todoScreen': (context) => const ToDoListScreen(),
-          '/todoDetailScreen': (context) => const ToDoDetailScreen(),
-        },
-        initialRoute: '/',
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: AppRouter.splashPage,
         theme: ThemeData(
           fontFamily: fontFamily,
         ),
@@ -58,7 +55,10 @@ class _BasicPageState extends State<BasicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(onPressed: () => Navigator.of(context).pushNamed('/todoScreen'), child: const Text('TODO LIST')),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pushNamed(AppRouter.todoPage),
+          child: const Text('TODO LIST'),
+        ),
       ),
     );
   }

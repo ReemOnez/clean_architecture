@@ -1,19 +1,18 @@
+import 'package:clean_project/config/routes.dart';
 import 'package:clean_project/core/presentation/widgets/custom_app_bar.dart';
 import 'package:clean_project/core/presentation/widgets/custom_back_button.dart';
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
-import 'package:clean_project/features/todo_list/presentation/pages/todo_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ToDoListScreen extends StatefulWidget {
-  const ToDoListScreen({super.key});
+class ToDoListPage extends StatefulWidget {
+  const ToDoListPage({super.key});
 
   @override
-  State<ToDoListScreen> createState() => _ToDoListScreenState();
+  State<ToDoListPage> createState() => _ToDoListPageState();
 }
 
-class _ToDoListScreenState extends State<ToDoListScreen> {
+class _ToDoListPageState extends State<ToDoListPage> {
   @override
   void initState() {
     super.initState();
@@ -52,7 +51,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/todoDetailScreen');
+                        Navigator.of(context).pushNamed(AppRouter.todoDetailPage);
                       },
                       child: Text('${data![index].todo} HIIIIIIIIIIIII'),
                     ),
