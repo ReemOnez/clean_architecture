@@ -74,11 +74,11 @@ class _$HelperBlocStateCopyWithImpl<$Res, $Val extends HelperBlocState>
 }
 
 /// @nodoc
-abstract class _$$_HelperBlocStateCopyWith<$Res>
+abstract class _$$HelperBlocStateImplCopyWith<$Res>
     implements $HelperBlocStateCopyWith<$Res> {
-  factory _$$_HelperBlocStateCopyWith(
-          _$_HelperBlocState value, $Res Function(_$_HelperBlocState) then) =
-      __$$_HelperBlocStateCopyWithImpl<$Res>;
+  factory _$$HelperBlocStateImplCopyWith(_$HelperBlocStateImpl value,
+          $Res Function(_$HelperBlocStateImpl) then) =
+      __$$HelperBlocStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -88,11 +88,11 @@ abstract class _$$_HelperBlocStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HelperBlocStateCopyWithImpl<$Res>
-    extends _$HelperBlocStateCopyWithImpl<$Res, _$_HelperBlocState>
-    implements _$$_HelperBlocStateCopyWith<$Res> {
-  __$$_HelperBlocStateCopyWithImpl(
-      _$_HelperBlocState _value, $Res Function(_$_HelperBlocState) _then)
+class __$$HelperBlocStateImplCopyWithImpl<$Res>
+    extends _$HelperBlocStateCopyWithImpl<$Res, _$HelperBlocStateImpl>
+    implements _$$HelperBlocStateImplCopyWith<$Res> {
+  __$$HelperBlocStateImplCopyWithImpl(
+      _$HelperBlocStateImpl _value, $Res Function(_$HelperBlocStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -102,7 +102,7 @@ class __$$_HelperBlocStateCopyWithImpl<$Res>
     Object? failure = freezed,
     Object? contextCallback = freezed,
   }) {
-    return _then(_$_HelperBlocState(
+    return _then(_$HelperBlocStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -121,8 +121,8 @@ class __$$_HelperBlocStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_HelperBlocState implements _HelperBlocState {
-  const _$_HelperBlocState(
+class _$HelperBlocStateImpl implements _HelperBlocState {
+  const _$HelperBlocStateImpl(
       {required this.isLoading, this.failure, this.contextCallback});
 
   @override
@@ -139,10 +139,10 @@ class _$_HelperBlocState implements _HelperBlocState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HelperBlocState &&
+            other is _$HelperBlocStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.failure, failure) || other.failure == failure) &&
@@ -157,15 +157,17 @@ class _$_HelperBlocState implements _HelperBlocState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HelperBlocStateCopyWith<_$_HelperBlocState> get copyWith =>
-      __$$_HelperBlocStateCopyWithImpl<_$_HelperBlocState>(this, _$identity);
+  _$$HelperBlocStateImplCopyWith<_$HelperBlocStateImpl> get copyWith =>
+      __$$HelperBlocStateImplCopyWithImpl<_$HelperBlocStateImpl>(
+          this, _$identity);
 }
 
 abstract class _HelperBlocState implements HelperBlocState {
   const factory _HelperBlocState(
-      {required final bool isLoading,
-      final FailureResult<dynamic>? failure,
-      final void Function(BuildContext)? contextCallback}) = _$_HelperBlocState;
+          {required final bool isLoading,
+          final FailureResult<dynamic>? failure,
+          final void Function(BuildContext)? contextCallback}) =
+      _$HelperBlocStateImpl;
 
   @override
   bool get isLoading;
@@ -175,7 +177,7 @@ abstract class _HelperBlocState implements HelperBlocState {
   void Function(BuildContext)? get contextCallback;
   @override
   @JsonKey(ignore: true)
-  _$$_HelperBlocStateCopyWith<_$_HelperBlocState> get copyWith =>
+  _$$HelperBlocStateImplCopyWith<_$HelperBlocStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -256,20 +258,20 @@ class _$HelperBlocEventCopyWithImpl<$Res, $Val extends HelperBlocEvent>
 }
 
 /// @nodoc
-abstract class _$$LoadingChangedCopyWith<$Res> {
-  factory _$$LoadingChangedCopyWith(
-          _$LoadingChanged value, $Res Function(_$LoadingChanged) then) =
-      __$$LoadingChangedCopyWithImpl<$Res>;
+abstract class _$$LoadingChangedImplCopyWith<$Res> {
+  factory _$$LoadingChangedImplCopyWith(_$LoadingChangedImpl value,
+          $Res Function(_$LoadingChangedImpl) then) =
+      __$$LoadingChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool isLoading});
 }
 
 /// @nodoc
-class __$$LoadingChangedCopyWithImpl<$Res>
-    extends _$HelperBlocEventCopyWithImpl<$Res, _$LoadingChanged>
-    implements _$$LoadingChangedCopyWith<$Res> {
-  __$$LoadingChangedCopyWithImpl(
-      _$LoadingChanged _value, $Res Function(_$LoadingChanged) _then)
+class __$$LoadingChangedImplCopyWithImpl<$Res>
+    extends _$HelperBlocEventCopyWithImpl<$Res, _$LoadingChangedImpl>
+    implements _$$LoadingChangedImplCopyWith<$Res> {
+  __$$LoadingChangedImplCopyWithImpl(
+      _$LoadingChangedImpl _value, $Res Function(_$LoadingChangedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -277,7 +279,7 @@ class __$$LoadingChangedCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
   }) {
-    return _then(_$LoadingChanged(
+    return _then(_$LoadingChangedImpl(
       null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -288,8 +290,8 @@ class __$$LoadingChangedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingChanged implements LoadingChanged {
-  const _$LoadingChanged(this.isLoading);
+class _$LoadingChangedImpl implements LoadingChanged {
+  const _$LoadingChangedImpl(this.isLoading);
 
   @override
   final bool isLoading;
@@ -300,10 +302,10 @@ class _$LoadingChanged implements LoadingChanged {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingChanged &&
+            other is _$LoadingChangedImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading));
   }
@@ -314,8 +316,9 @@ class _$LoadingChanged implements LoadingChanged {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadingChangedCopyWith<_$LoadingChanged> get copyWith =>
-      __$$LoadingChangedCopyWithImpl<_$LoadingChanged>(this, _$identity);
+  _$$LoadingChangedImplCopyWith<_$LoadingChangedImpl> get copyWith =>
+      __$$LoadingChangedImplCopyWithImpl<_$LoadingChangedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -397,34 +400,34 @@ class _$LoadingChanged implements LoadingChanged {
 }
 
 abstract class LoadingChanged implements HelperBlocEvent {
-  const factory LoadingChanged(final bool isLoading) = _$LoadingChanged;
+  const factory LoadingChanged(final bool isLoading) = _$LoadingChangedImpl;
 
   bool get isLoading;
   @JsonKey(ignore: true)
-  _$$LoadingChangedCopyWith<_$LoadingChanged> get copyWith =>
+  _$$LoadingChangedImplCopyWith<_$LoadingChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FailureClearedCopyWith<$Res> {
-  factory _$$FailureClearedCopyWith(
-          _$FailureCleared value, $Res Function(_$FailureCleared) then) =
-      __$$FailureClearedCopyWithImpl<$Res>;
+abstract class _$$FailureClearedImplCopyWith<$Res> {
+  factory _$$FailureClearedImplCopyWith(_$FailureClearedImpl value,
+          $Res Function(_$FailureClearedImpl) then) =
+      __$$FailureClearedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$FailureClearedCopyWithImpl<$Res>
-    extends _$HelperBlocEventCopyWithImpl<$Res, _$FailureCleared>
-    implements _$$FailureClearedCopyWith<$Res> {
-  __$$FailureClearedCopyWithImpl(
-      _$FailureCleared _value, $Res Function(_$FailureCleared) _then)
+class __$$FailureClearedImplCopyWithImpl<$Res>
+    extends _$HelperBlocEventCopyWithImpl<$Res, _$FailureClearedImpl>
+    implements _$$FailureClearedImplCopyWith<$Res> {
+  __$$FailureClearedImplCopyWithImpl(
+      _$FailureClearedImpl _value, $Res Function(_$FailureClearedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$FailureCleared implements FailureCleared {
-  const _$FailureCleared();
+class _$FailureClearedImpl implements FailureCleared {
+  const _$FailureClearedImpl();
 
   @override
   String toString() {
@@ -432,9 +435,9 @@ class _$FailureCleared implements FailureCleared {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FailureCleared);
+        (other.runtimeType == runtimeType && other is _$FailureClearedImpl);
   }
 
   @override
@@ -520,24 +523,24 @@ class _$FailureCleared implements FailureCleared {
 }
 
 abstract class FailureCleared implements HelperBlocEvent {
-  const factory FailureCleared() = _$FailureCleared;
+  const factory FailureCleared() = _$FailureClearedImpl;
 }
 
 /// @nodoc
-abstract class _$$FailureHappenedCopyWith<$Res> {
-  factory _$$FailureHappenedCopyWith(
-          _$FailureHappened value, $Res Function(_$FailureHappened) then) =
-      __$$FailureHappenedCopyWithImpl<$Res>;
+abstract class _$$FailureHappenedImplCopyWith<$Res> {
+  factory _$$FailureHappenedImplCopyWith(_$FailureHappenedImpl value,
+          $Res Function(_$FailureHappenedImpl) then) =
+      __$$FailureHappenedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({FailureResult<dynamic> failure});
 }
 
 /// @nodoc
-class __$$FailureHappenedCopyWithImpl<$Res>
-    extends _$HelperBlocEventCopyWithImpl<$Res, _$FailureHappened>
-    implements _$$FailureHappenedCopyWith<$Res> {
-  __$$FailureHappenedCopyWithImpl(
-      _$FailureHappened _value, $Res Function(_$FailureHappened) _then)
+class __$$FailureHappenedImplCopyWithImpl<$Res>
+    extends _$HelperBlocEventCopyWithImpl<$Res, _$FailureHappenedImpl>
+    implements _$$FailureHappenedImplCopyWith<$Res> {
+  __$$FailureHappenedImplCopyWithImpl(
+      _$FailureHappenedImpl _value, $Res Function(_$FailureHappenedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -545,7 +548,7 @@ class __$$FailureHappenedCopyWithImpl<$Res>
   $Res call({
     Object? failure = null,
   }) {
-    return _then(_$FailureHappened(
+    return _then(_$FailureHappenedImpl(
       null == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -556,8 +559,8 @@ class __$$FailureHappenedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FailureHappened implements FailureHappened {
-  const _$FailureHappened(this.failure);
+class _$FailureHappenedImpl implements FailureHappened {
+  const _$FailureHappenedImpl(this.failure);
 
   @override
   final FailureResult<dynamic> failure;
@@ -568,10 +571,10 @@ class _$FailureHappened implements FailureHappened {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FailureHappened &&
+            other is _$FailureHappenedImpl &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
@@ -581,8 +584,9 @@ class _$FailureHappened implements FailureHappened {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureHappenedCopyWith<_$FailureHappened> get copyWith =>
-      __$$FailureHappenedCopyWithImpl<_$FailureHappened>(this, _$identity);
+  _$$FailureHappenedImplCopyWith<_$FailureHappenedImpl> get copyWith =>
+      __$$FailureHappenedImplCopyWithImpl<_$FailureHappenedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -665,29 +669,31 @@ class _$FailureHappened implements FailureHappened {
 
 abstract class FailureHappened implements HelperBlocEvent {
   const factory FailureHappened(final FailureResult<dynamic> failure) =
-      _$FailureHappened;
+      _$FailureHappenedImpl;
 
   FailureResult<dynamic> get failure;
   @JsonKey(ignore: true)
-  _$$FailureHappenedCopyWith<_$FailureHappened> get copyWith =>
+  _$$FailureHappenedImplCopyWith<_$FailureHappenedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ContextCallbackTriggeredCopyWith<$Res> {
-  factory _$$ContextCallbackTriggeredCopyWith(_$ContextCallbackTriggered value,
-          $Res Function(_$ContextCallbackTriggered) then) =
-      __$$ContextCallbackTriggeredCopyWithImpl<$Res>;
+abstract class _$$ContextCallbackTriggeredImplCopyWith<$Res> {
+  factory _$$ContextCallbackTriggeredImplCopyWith(
+          _$ContextCallbackTriggeredImpl value,
+          $Res Function(_$ContextCallbackTriggeredImpl) then) =
+      __$$ContextCallbackTriggeredImplCopyWithImpl<$Res>;
   @useResult
   $Res call({void Function(BuildContext) callback});
 }
 
 /// @nodoc
-class __$$ContextCallbackTriggeredCopyWithImpl<$Res>
-    extends _$HelperBlocEventCopyWithImpl<$Res, _$ContextCallbackTriggered>
-    implements _$$ContextCallbackTriggeredCopyWith<$Res> {
-  __$$ContextCallbackTriggeredCopyWithImpl(_$ContextCallbackTriggered _value,
-      $Res Function(_$ContextCallbackTriggered) _then)
+class __$$ContextCallbackTriggeredImplCopyWithImpl<$Res>
+    extends _$HelperBlocEventCopyWithImpl<$Res, _$ContextCallbackTriggeredImpl>
+    implements _$$ContextCallbackTriggeredImplCopyWith<$Res> {
+  __$$ContextCallbackTriggeredImplCopyWithImpl(
+      _$ContextCallbackTriggeredImpl _value,
+      $Res Function(_$ContextCallbackTriggeredImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -695,7 +701,7 @@ class __$$ContextCallbackTriggeredCopyWithImpl<$Res>
   $Res call({
     Object? callback = null,
   }) {
-    return _then(_$ContextCallbackTriggered(
+    return _then(_$ContextCallbackTriggeredImpl(
       null == callback
           ? _value.callback
           : callback // ignore: cast_nullable_to_non_nullable
@@ -706,8 +712,8 @@ class __$$ContextCallbackTriggeredCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ContextCallbackTriggered implements ContextCallbackTriggered {
-  const _$ContextCallbackTriggered(this.callback);
+class _$ContextCallbackTriggeredImpl implements ContextCallbackTriggered {
+  const _$ContextCallbackTriggeredImpl(this.callback);
 
   @override
   final void Function(BuildContext) callback;
@@ -718,10 +724,10 @@ class _$ContextCallbackTriggered implements ContextCallbackTriggered {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ContextCallbackTriggered &&
+            other is _$ContextCallbackTriggeredImpl &&
             (identical(other.callback, callback) ||
                 other.callback == callback));
   }
@@ -732,10 +738,9 @@ class _$ContextCallbackTriggered implements ContextCallbackTriggered {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ContextCallbackTriggeredCopyWith<_$ContextCallbackTriggered>
-      get copyWith =>
-          __$$ContextCallbackTriggeredCopyWithImpl<_$ContextCallbackTriggered>(
-              this, _$identity);
+  _$$ContextCallbackTriggeredImplCopyWith<_$ContextCallbackTriggeredImpl>
+      get copyWith => __$$ContextCallbackTriggeredImplCopyWithImpl<
+          _$ContextCallbackTriggeredImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -818,10 +823,11 @@ class _$ContextCallbackTriggered implements ContextCallbackTriggered {
 
 abstract class ContextCallbackTriggered implements HelperBlocEvent {
   const factory ContextCallbackTriggered(
-      final void Function(BuildContext) callback) = _$ContextCallbackTriggered;
+          final void Function(BuildContext) callback) =
+      _$ContextCallbackTriggeredImpl;
 
   void Function(BuildContext) get callback;
   @JsonKey(ignore: true)
-  _$$ContextCallbackTriggeredCopyWith<_$ContextCallbackTriggered>
+  _$$ContextCallbackTriggeredImplCopyWith<_$ContextCallbackTriggeredImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

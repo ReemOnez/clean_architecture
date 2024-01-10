@@ -1,5 +1,5 @@
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
-import 'package:clean_project/features/todo_list/presentation/bloc/todo_event.dart';
+import 'package:clean_project/features/todo_list/presentation/pages/todo_detail_screen.dart';
 import 'package:clean_project/features/todo_list/presentation/pages/todo_list_screen.dart';
 import 'package:clean_project/helpers/mixins/size_mixin.dart';
 import 'package:clean_project/helpers/mixins/theme_mixin.dart';
@@ -25,17 +25,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with SizeMixin, ThemeMixin {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider(
-        create: (_) =>
-        serviceLocator<ToDoBloc>()
-          ..add(GetToDoList()),
-      ),
-    ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => serviceLocator<ToDoBloc>()..add(const TodoEvent.getTodoList()),
+        ),
+      ],
       child: MaterialApp(
         routes: {
           '/': (context) => const BasicPage(),
           '/todoScreen': (context) => const ToDoListScreen(),
+          '/todoDetailScreen': (context) => const ToDoDetailScreen(),
         },
         initialRoute: '/',
         theme: ThemeData(
@@ -58,9 +58,8 @@ class _BasicPageState extends State<BasicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pushNamed('/todoScreen'),
-              child: const Text('TODO LIST')),
-    ),);
+        child: ElevatedButton(onPressed: () => Navigator.of(context).pushNamed('/todoScreen'), child: const Text('TODO LIST')),
+      ),
+    );
   }
 }
