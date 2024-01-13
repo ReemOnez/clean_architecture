@@ -1,3 +1,3 @@
 class Urls {
-  static const String baseUrl = 'https://dummyjson.com/';
+  static const String baseUrl = 'https://api.elitewherego.net/api/multiple';
 }

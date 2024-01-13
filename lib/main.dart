@@ -1,4 +1,6 @@
 import 'package:clean_project/config/routes.dart';
+import 'package:clean_project/features/delivery/presentation/bloc/delivery_bloc.dart';
+import 'package:clean_project/features/delivery/presentation/pages/go_delivery_page.dart';
 import 'package:clean_project/features/todo_list/presentation/bloc/todo_bloc.dart';
 import 'package:clean_project/features/todo_list/presentation/pages/todo_detail_screen.dart';
 import 'package:clean_project/features/todo_list/presentation/pages/todo_list_screen.dart';
@@ -7,12 +9,20 @@ import 'package:clean_project/helpers/mixins/theme_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_project/injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// initialize dependencies injections
   await init();
+  await Future.wait([
+    ScreenUtil.ensureScreenSize(),
+
+    /// todo: add device info package
+    // getDeviceIdentifier().then((id) => deviceIdentifier = id),
+  ]);
+
   runApp(const MyApp());
 }
 
@@ -23,27 +33,26 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with SizeMixin, ThemeMixin {
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(375, 830));
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => serviceLocator<ToDoBloc>()..add(const TodoEvent.getTodoList()),
-        ),
+        BlocProvider(create: (_) => serviceLocator<ToDoBloc>()..add(const TodoEvent.getTodoList())),
+        BlocProvider(create: (_) => serviceLocator<DeliveryBloc>()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: AppRouter.splashPage,
-        theme: ThemeData(
-          fontFamily: fontFamily,
-        ),
+        initialRoute: BasicPage.routeName,
       ),
     );
   }
 }
 
 class BasicPage extends StatefulWidget {
+  static const String routeName = '/BasicPage';
+
   const BasicPage({super.key});
 
   @override
@@ -56,8 +65,8 @@ class _BasicPageState extends State<BasicPage> {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () => Navigator.of(context).pushNamed(AppRouter.todoPage),
-          child: const Text('TODO LIST'),
+          onPressed: () => Navigator.of(context).pushNamed(GoDeliveryPage.routeName),
+          child: const Text('Delivery'),
         ),
       ),
     );

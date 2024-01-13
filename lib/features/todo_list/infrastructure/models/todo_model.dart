@@ -17,44 +17,19 @@ class ToDoModel extends ToDo with _$ToDoModel {
     required int id,
     required int userId,
     required String todo,
-   // List<UserModel>? users,
-  //  bool? completed,
+    // List<UserModel>? users,
+    //  bool? completed,
   }) = _ToDoModel;
 
-  static List<ToDoModel> fromJsonToDoList(dynamic json) => (json['todos'] as List).map((e) => ToDoModel.fromJson(e)).toList();
+  static List<ToDoModel> fromJsonToDoList(Map<String, dynamic> json) => (json['todos'] as List).map((e) => ToDoModel.fromJson(e)).toList();
 
   factory ToDoModel.fromJson(Map<String, dynamic> json) => _$ToDoModelFromJson(json);
 
-  // String convertNumToString() => 'converteddddd';
-}
-
-// class bla {
-//   void d() {
-//     //ToDoModel t1 = ToDoModel(id: 1, userId: 22, todo: 'blaaa', users: [UserModel(phone: 12345, job: 'bleeeh')]);
-//     ToDoModel t2 = ToDoModel(id: 2, userId: 22, todo: 'blaaa', users: [UserModel(phone: 12345)]);
-//     t1.copyWith(id: 222);
-//     final j = t1.toJson();
-//     final j2 = ToDoModel.fromJson({});
-//    //  t2.convertNumToString();
-//   }
-// }
-
-// factory ToDoModel.fromJson(Map<String, dynamic> json) {
+// factory ToDoModel.fromDomain(ToDo toDo) {
 //   return ToDoModel(
-//     id: json['id'],
-//     todo: json['todo'],
-//     //completed: json['completed'],
-//     userId: json['userId'],
+//     id: toDo.id,
+//     userId: toDo.userId,
+//     todo: toDo.todo,
 //   );
 // }
-//
-// static List<ToDoModel> fromJsonToDoList(dynamic json) => (json['todos'] as List).map((e) => ToDoModel.fromJson(e)).toList();
-//
-// Map<String, dynamic> toJson() {
-//   return {
-//     'id': id,
-//     'todo': todo,
-//     //'completed': completed,
-//     'userId': userId,
-//   };
-// }
+}

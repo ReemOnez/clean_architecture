@@ -21,6 +21,12 @@ class BaseBloc<E, S> extends Bloc<E, S> {
     FutureOr<void> Function(T?)? onSuccessCallBack,
     FutureOr<void> Function(FailureResult?)? onErrorCallBack,
     FutureOr<void> Function(bool)? onLoadingChange,
+
+
+
+    Future<DataResult<T>> Function()? localCall,
+    Future<DataResult<T>> Function()? successRemoteCall,
+    Future<DataResult<int>> Function(T data)? saveRemoteDataCall,
   }) async {
     // if (useBaseLoader) {
     //   helperBloc.add(const HelperBlocEvent.loadingChanged(true));

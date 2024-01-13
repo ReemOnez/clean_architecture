@@ -51,7 +51,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.todoDetailPage);
+                       // Navigator.of(context).pushNamed(AppRouter.todoDetailPage);
                       },
                       child: Text('${data![index].todo} HIIIIIIIIIIIII'),
                     ),

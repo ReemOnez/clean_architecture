@@ -36,9 +36,9 @@ class ToDoBloc extends Bloc<TodoEvent, TodoState> {
     emit(TodoState.numberUpdated(number: event.number));
   }
 
-  // Future<void> _onCheckFormValidation(CheckFormValidation event, Emitter<ToDoState> emit) async {
-  //   emit(IsFormValid(number: event.number, name: event.name));
-  // }
+// Future<void> _onCheckFormValidation(CheckFormValidation event, Emitter<ToDoState> emit) async {
+//   emit(IsFormValid(number: event.number, name: event.name));
+// }
 
 // futureWrapper(
 //   futureCallBack: () => toDoUseCase(),

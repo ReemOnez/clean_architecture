@@ -1,3 +1,9 @@
+import 'package:clean_project/features/delivery/domain/repositories/i_delivery_fare_repository.dart';
+import 'package:clean_project/features/delivery/domain/usecases/delivery_usecase.dart';
+import 'package:clean_project/features/delivery/infrastructure/data_sources/local/todo_local_data_source.dart';
+import 'package:clean_project/features/delivery/infrastructure/data_sources/remote/delivery_remote_data_source.dart';
+import 'package:clean_project/features/delivery/infrastructure/repositories/deliver_fare_repository.dart';
+import 'package:clean_project/features/delivery/presentation/bloc/delivery_bloc.dart';
 import 'package:clean_project/features/todo_list/domain/repositories/i_todo_repository.dart';
 import 'package:clean_project/features/todo_list/domain/usecases/todo_usecase.dart';
 import 'package:clean_project/features/todo_list/infrastructure/data_sources/local/feature_local_data_source.dart';
@@ -15,7 +21,7 @@ final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   await essentialServices();
-  await toDoFeature();
+  await deliveryFeature();
 }
 
 Future<void> essentialServices() async {
@@ -55,5 +61,14 @@ Future<void> toDoFeature() async {
   serviceLocator.registerLazySingleton<IToDoRepository>(() => ToDoRepository(serviceLocator(), serviceLocator(), serviceLocator()));
   serviceLocator.registerLazySingleton(() => ToDoUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => BaseLocalDataSource(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ToDoBloc(serviceLocator()));
+  serviceLocator.registerFactory(() => ToDoBloc(serviceLocator()));
+}
+
+Future<void> deliveryFeature() async {
+  serviceLocator.registerLazySingleton(() => DeliveryRemoteDataSource(serviceLocator(), serviceLocator()));
+  serviceLocator.registerLazySingleton(() => DeliveryLocalDataSource(serviceLocator()));
+  serviceLocator.registerLazySingleton<IDeliveryRepository>(() => DeliveryRepository(serviceLocator(), serviceLocator(), serviceLocator()));
+  serviceLocator.registerLazySingleton(() => DeliveryUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => BaseLocalDataSource(serviceLocator()));
+  serviceLocator.registerFactory(() => DeliveryBloc(serviceLocator()));
 }

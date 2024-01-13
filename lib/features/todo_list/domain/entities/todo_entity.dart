@@ -1,5 +1,6 @@
 class ToDo {
   final int id, userId;
+
   //final bool completed;
   final String todo;
 

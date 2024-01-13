@@ -13,7 +13,7 @@ class TodoState with _$TodoState {
   const factory TodoState.numberUpdated({required int number}) = NumberUpdated;
 }
 
-// import 'package:clean_project/features/todo_list/domain/entities/todo_entity.dart';
+// import 'package:clean_project/features/todo_list/domain/entities/delivery_fare_entity.dart';
 // import 'package:equatable/equatable.dart';
 //
 // abstract class ToDoState extends Equatable {
